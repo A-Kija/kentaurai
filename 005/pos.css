@@ -100,11 +100,31 @@ img {
     width: 500px;
     position: relative;
     margin: 20px;
+    height: 290px;
     overflow: hidden;
-
 }
 
 .img-container2 img {
-    position: relative;
+    position: absolute;
     display: inline-block;
+}
+
+.img-container2 .img12  {
+    top: 20px;
+    left: 20px;
+    transition: all 0.5s;
+}
+
+.img-container2 .img22 {
+    top: 20px;
+    left: 540px;
+    transition: all 0.5s;
+}
+
+.img-container2:hover .img12 {
+    left: -520px;
+}
+
+.img-container2:hover .img22 {
+    left: 20px;
 }
