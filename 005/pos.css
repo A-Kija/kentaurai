@@ -1,0 +1,110 @@
+.parent {
+    width: 700px;
+    height: 700px;
+    background-color: lightgray;
+    position: relative;
+    left: 500px;
+}
+
+.circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+.circle.red {
+    background-color: crimson;
+    position: absolute;
+    left: 200px;
+    top: 200px;
+}
+
+.circle.green {
+    background-color: darkgreen;
+}
+
+.btn {
+    font-size: 50px;
+    padding: 30px 80px;
+    background-color: lightblue;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.btn svg {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    transition: all 0.3s;
+    top: 20px;
+    left: -20px;
+}
+
+.btn span {
+    position: relative;
+    top: -20px;
+    left: 20px;
+    transition: all 0.3s;
+}
+
+.btn:hover svg {
+    top: -20px;
+    left: -40px;
+    fill: salmon;
+}
+
+.btn:hover span {
+    top: 20px;
+    left: 40px;
+}
+
+.img-container {
+    border: 1px solid black;
+    padding: 20px;
+    width: 500px;
+    position: relative;
+    margin: 20px;
+    height: 290px;
+
+}
+
+img {
+    width: 500px;
+    height: auto;
+    position: absolute;
+    transition: all 0.5s;
+}
+
+.img1 {
+    opacity: 1;
+}
+
+.img2 {
+    opacity: 0;
+}
+
+.img-container:hover .img1 {
+    opacity: 0;
+}
+
+.img-container:hover .img2 {
+    opacity: 1;
+}
+
+
+.img-container2 {
+    border: 1px solid black;
+    padding: 20px;
+    width: 500px;
+    position: relative;
+    margin: 20px;
+    overflow: hidden;
+
+}
+
+.img-container2 img {
+    position: relative;
+    display: inline-block;
+}
