@@ -1,5 +1,11 @@
+:root {
+    --img: 300px;
+    --img2: 500px;
+}
+
 body {
     margin: 0;
+    font-family: "Oswald", sans-serif;
 }
 
 .layout {
@@ -76,20 +82,33 @@ svg:hover {
 }
 
 img {
-    width: 500px;
+    width: var(--img);
     height: auto;
     position: absolute;
     transition: all 0.5s;
 }
 
+@media only screen and (min-width: 700px) {
+    img {
+        width: var(--img2);
+    }
+}
+
 .img-container2 {
     border: 1px solid black;
     padding: 20px;
-    width: 500px;
+    width: var(--img);
     position: relative;
     margin: 20px;
-    height: 290px;
+    height: 170px;
     overflow: hidden;
+}
+
+@media only screen and (min-width: 700px) {
+    .img-container2 {
+        width: var(--img2);
+        height: 290px;
+    }
 }
 
 .img-container2 img {
@@ -105,14 +124,128 @@ img {
 
 .img-container2 .img22 {
     top: 20px;
-    left: 540px;
+    left: calc(var(--img) + 40px);
     transition: all 0.5s;
 }
 
+@media only screen and (min-width: 700px) {
+
+    .img-container2 .img22 {
+        left: calc(var(--img2) + 40px);
+    }
+}
+
 .img-container2:hover .img12 {
-    left: -520px;
+    left: calc(-1 * (var(--img) + 20px));
+}
+
+@media only screen and (min-width: 700px) {
+    .img-container2:hover .img12 {
+        left: calc(-1 * (var(--img2) + 20px));
+    }
 }
 
 .img-container2:hover .img22 {
     left: 20px;
 }
+
+.about {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.about .text {
+    width: 100%;
+    position: relative;
+}
+
+.about .text h2::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: pink;
+    border-radius: 50%;
+    position: relative;
+    bottom: 10px;
+}
+
+.about .text h2::after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: pink;
+    border-radius: 50%;
+    position: relative;
+    bottom: 10px;
+}
+
+
+/* @media only screen and (max-width: 600px) {
+    .about .text {
+        width: 100%;
+    }
+} */
+
+@media only screen and (min-width: 600px) {
+    .about .text {
+        width: 50%;
+    }
+    .about .text h2 {
+        font-size: 30px;
+    }
+}
+
+
+@media only screen and (min-width: 900px) {
+    .about .text {
+        width: 25%;
+    }
+    .about .text h2 {
+        font-size: 40px;
+    }
+}
+
+.desktop-menu {
+    display: none;
+}
+
+
+.burger-holder {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 100px;
+}
+
+@media only screen and (min-width: 900px) {
+    .desktop-menu {
+        display: flex;
+    }
+    .mobile-menu {
+        display: none;
+    }
+}
+
+
+
+.burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: relative;
+}
+
+.burger div {
+    width: 100%;
+    height: 5px;
+    background-color: white;
+    transition: all 0.3s;
+}
+
+
+
