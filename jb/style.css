@@ -1,0 +1,156 @@
+* {
+    letter-spacing: 3px;
+}
+
+i {
+    color: steelblue;
+}
+
+.big {
+    font-size: 2em;
+    color: greenyellow;
+}
+
+.big .small {
+    font-size: 0.5em;
+    color: crimson;
+}
+
+.big.small {
+    font-size: 3.5em;
+    color: lightcoral;
+}
+
+#big {
+    font-size: 2em;
+    color: darkslateblue;
+    font-weight: bold;
+}
+
+#big .small {
+    font-size: 0.3em;
+    color: darkorange;
+}
+
+button {
+    font-size: 1.5em;
+    color: darkorchid;
+    background-color: lightgray;
+    border: 1px solid darkred;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+button[type="button"] {
+    background-color: lightsalmon;
+    border: 1px solid darkolivegreen;
+}
+
+[type="submit"] {
+    background-color: lightgreen;
+    border: 1px solid darkgreen;
+}
+
+button[type="reset"] {
+    background-color: lightcoral;
+    border: 1px solid darkred;
+}
+
+.span-1, .span-2 {
+    font-size: 1.5em;
+    color: darkslategray;
+    padding: 5px;
+    margin: 5px;
+}
+
+.parent > p {
+    font-size: 1.5em;
+    color: blueviolet;
+    padding: 5px;
+    margin: 5px;
+}
+
+p + h2 {
+    color: deeppink;
+}
+
+h2 + h3 {
+    font-size: 1.5em;
+    color: darkorange;
+    padding: 5px;
+    margin: 5px;
+}
+
+h5 ~ span {
+    font-size: 4.5em;
+    color: darkred;
+    padding: 5px;
+    margin: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ul li {
+    border-bottom: 1px solid darkslategray;
+}
+
+ul li:nth-child(odd) {
+    color: darkorange;
+
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+.after {
+    font-size: 60px;
+}
+
+label {
+    user-select: none;
+    cursor: pointer;
+}
+
+[type="checkbox"] {
+    display: none;
+}
+
+[type="checkbox"]:checked + div {
+    color: darkorange;
+}
+
+.bin {
+    display: flex;
+    margin: 50px;
+    justify-content: center;
+}
+
+.sq {
+    width: 100px;
+    height: 100px;
+    background-color: darkslategray;
+    animation-name: anikuku;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0,1.48,1,-1.59);
+}
+
+@keyframes anikuku {
+    0%   {
+        background-color: darkslategray;
+        transform: rotate(0deg);
+    }
+    100% {
+        background-color: darkslategray;
+        transform: rotate(360deg);
+    }
+
+  }
