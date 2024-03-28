@@ -172,8 +172,33 @@ console.log(newMD2);
 
 //4. Surasti ir išspausdinti mažiausią skaičių
 
+// let min = newMD2[0][0];
+
+// for (let i = 0; i < newMD2.length; i++) {
+//     for (let j = 0; j < newMD2[i].length; j++) {
+//         if (newMD2[i][j] < min) {
+//             min = newMD2[i][j];
+//         }
+//     }
+// }
+
+// console.clear();
+
+// console.log(newMD2);
+// console.log(min);
+
+const r10 = newMD2.flat();
+
+console.log(r10);
+
 
 const min = Math.min(...newMD2.flat());
 
 console.log(min);
+
+console.clear();
+
+const arr2 = [0, 1, [2, [3, [4, [5]]]]];
+
+console.log(arr2.flat(Infinity));
 
