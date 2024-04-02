@@ -247,3 +247,7 @@ for (let i = 0; i < eggs.length; i++) {
     console.log('%c    ', 'font-size: 30px;background: '+ eggs[i] +';display: block;border-radius: 50% 60% 50% 50% / 70% 70% 40% 40%;');
 }
 
+// saskaitos[i].vat = (sumProductsTotal * 0.21).toFixed(2); 
+ 
+// saskaitos[i].grandTotal = (sumProductsTotal + saskaitos[i].vat).toFixed(2);
+
