@@ -91,19 +91,21 @@ window.addEventListener('load', _ => {
 
     const ballGo = _ => {
         balls.forEach(b => {
-            if (rand(0, 200)) {
-                b.style.top = Math.max(parseInt(b.style.top || 0), rand(0, 450)) + 'px';
-                b.style.left = Math.max(parseInt(b.style.left || 0), rand(0, 450)) + 'px';
-            } else {
-                b.style.top = rand(0, 450) + 'px';
-                b.style.left = rand(0, 450) + 'px';
-                b.style.backgroundColor = `rgb(${rand(0, 255)}, ${rand(0, 255)}, ${rand(0, 255)})`;
+            if (!rand(0, 4)) {
+                if (rand(0, 50)) {
+                    b.style.top = Math.max(parseInt(b.style.top || 0), rand(0, 450)) + 'px';
+                    b.style.left = Math.max(parseInt(b.style.left || 0), rand(0, 450)) + 'px';
+                } else {
+                    b.style.top = rand(0, 450) + 'px';
+                    b.style.left = rand(0, 450) + 'px';
+                    b.style.backgroundColor = `rgb(${rand(0, 255)}, ${rand(0, 255)}, ${rand(0, 255)})`;
+                }
             }
         });
 
     }
 
-    setInterval(ballGo, 500);
+    setInterval(ballGo, 200);
 
 
 });
