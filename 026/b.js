@@ -97,6 +97,7 @@ window.addEventListener('load', _ => {
             } else {
                 b.style.top = rand(0, 450) + 'px';
                 b.style.left = rand(0, 450) + 'px';
+                b.style.backgroundColor = `rgb(${rand(0, 255)}, ${rand(0, 255)}, ${rand(0, 255)})`;
             }
         });
 
