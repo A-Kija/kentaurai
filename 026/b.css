@@ -1,0 +1,18 @@
+.bin {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border: 1px solid gray;
+    box-sizing: border-box;
+}
+
+.bin div {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 1px solid gray;
+    background-color: gray;
+    border-radius: 50%;
+    transition: all 0.5s;
+    opacity: 0.5;
+}
