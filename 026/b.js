@@ -91,7 +91,10 @@ window.addEventListener('load', _ => {
 
     const ballGo = _ => {
         balls.forEach(b => {
-            if (rand(0, 1)) {
+            if (rand(0, 200)) {
+                b.style.top = Math.max(parseInt(b.style.top || 0), rand(0, 450)) + 'px';
+                b.style.left = Math.max(parseInt(b.style.left || 0), rand(0, 450)) + 'px';
+            } else {
                 b.style.top = rand(0, 450) + 'px';
                 b.style.left = rand(0, 450) + 'px';
             }
