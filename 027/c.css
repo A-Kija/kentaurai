@@ -1,0 +1,18 @@
+.red {
+    display: flex;
+    border: 3px solid #dc143c;
+    background-color: #dc143c66;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    color: white;
+    font-family: monospace;
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    margin: 30px;
+}
+
+.red span {
+    user-select: none;
+}
