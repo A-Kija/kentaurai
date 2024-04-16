@@ -1,0 +1,26 @@
+.back {
+    padding: 10px;
+    background-color: beige;
+}
+
+.calc {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid gray;
+}
+
+.parent {
+    margin: 20px;
+    width: 400px;
+    height: 400px;
+    background-color: skyblue;
+}
+
+.child {
+    position: fixed;
+    right: 100px;
+    top: 100px;
+    width: 40px;
+    height: 40px;
+    background-color: orange;
+}
