@@ -96,3 +96,8 @@ child.addEventListener('click', event => {
 
 });
 
+const smallUserword = "user".sub();
+
+
+console.log(smallUserword);
+
