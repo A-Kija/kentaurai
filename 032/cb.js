@@ -35,9 +35,7 @@ const repaintFigures = _ => {
         fig.appendChild(span);
         bin.appendChild(fig);
     });
-
 }
-
 
 window.addEventListener('load', _ => {
 
@@ -65,7 +63,6 @@ window.addEventListener('load', _ => {
         div.appendChild(input);
         div.appendChild(fig);
         cb.appendChild(div);
-
     });
 
     repaintFigures();
@@ -75,6 +72,5 @@ window.addEventListener('load', _ => {
             repaintFigures();
         });
     })
-
 
 });
