@@ -1,0 +1,64 @@
+.square {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+    font-size: 20px;
+    font-family: monospace;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+    font-size: 20px;
+    font-family: monospace;
+    border-radius: 50%;
+}
+
+.triangle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+    font-size: 20px;
+    width: 0; 
+    height: 0; 
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 100px solid black;
+}
+
+.triangle.small {
+    border-bottom: 20px solid black;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+
+.circle.small {
+    width: 20px;
+    height: 20px;
+}
+
+.square.small {
+    width: 20px;
+    height: 20px;
+}
+
+.holder {
+    display: flex;
+    gap: 10px;
+    margin: 20px;
+}
+
+.bin {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 30px;
+}
