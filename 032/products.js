@@ -19,14 +19,23 @@ window.addEventListener('load', _ => {
 
     const LAST_ID_LS = 'productsLastSavedId';
     const PRODUCTS_LS = 'productsList';
+    let destroyId = 0;
 
     const listHtml = document.querySelector('.--list');
     const closeButtons = document.querySelectorAll('.--close');
+    const createButton = document.querySelector('.--create');
+
+    //create
     const createModal = document.querySelector('.modal--create');
     const storeButton = createModal.querySelector('.--submit');
-    const createButton = document.querySelector('.--create');
+    
+    //delete
+    const deleteModal = document.querySelector('.modal--delete');
+    const deleteButton = deleteModal.querySelector('.--submit');
     
     
+    // LS functions
+
     const getId = _ => {
         const id = localStorage.getItem(LAST_ID_LS);
         if (null === id) {
@@ -55,6 +64,18 @@ window.addEventListener('load', _ => {
         storeData.push(data);
         write(storeData);
     }
+
+    const destroyData = id => {
+        const data = read();
+        const deleteData = data.filter(d => d.id !== id);
+        write(deleteData);
+    }
+
+    // LS functions
+
+
+
+    // DOM
     
     const showModal = modal => modal.style.display = 'flex';
 
@@ -63,21 +84,6 @@ window.addEventListener('load', _ => {
             i.value = '';
         });
         modal.style.display = 'none';
-    }
-    
-    const getDataFromForm = form => {
-        const data = {};
-        form.querySelectorAll('[name]').forEach(i => {
-            data[i.getAttribute('name')] = i.value;
-        });
-        return data;
-    }
-    
-    const store = _ => {
-        const data = getDataFromForm(createModal);
-        storeData(data);
-        hideModal(createModal);
-        showList();
     }
 
     const showList = _ => {
@@ -90,10 +96,66 @@ window.addEventListener('load', _ => {
             productsHtml += temp;
         });
         listHtml.innerHTML = productsHtml;
+        registerDelete();
+    }
+
+    const prepareDeleteModal = id => {
+        const title = read().find(p => p.id == id).productTitle;
+        deleteModal.querySelector('.product--title').innerText = title;
+    }
+
+    // DOM
+
+
+
+    // CRUD
+    
+    const getDataFromForm = form => {
+        const data = {};
+        form.querySelectorAll('[name]').forEach(i => {
+            data[i.getAttribute('name')] = i.value;
+        });
+        return data;
+    }
+    
+    const store = _ => {
+        const data = getDataFromForm(createModal); // CRUD
+        storeData(data); // LS
+        hideModal(createModal); // DOM
+        showList(); // DOM
+    }
+
+    const destroy = _ => {
+        destroyData(destroyId) // LS
+        hideModal(deleteModal); // DOM
+        showList(); // DOM
+    }
+
+    // CRUD
+
+
+
+    // Events
+
+    const registerDelete = _ => {
+        document.querySelectorAll('.--delete').forEach(b => {
+            b.addEventListener('click', _ => {
+                showModal(deleteModal);
+                prepareDeleteModal(b.value);
+                destroyId = parseInt(b.value);
+            });
+        });
     }
 
 
-///////////////////////EVENTS//////////////////////////////////////
+
+    // Events
+
+
+
+    // START
+
+    // Events
 
     closeButtons.forEach(b => {
         b.addEventListener('click', _ => {
@@ -105,7 +167,13 @@ window.addEventListener('load', _ => {
 
     storeButton.addEventListener('click', _ => store());
 
+    deleteButton.addEventListener('click', _ => destroy());
 
-    showList();
+    // Events
+
+    setTimeout(_ => showList(), 2000);
+    
 
 });
+
+
