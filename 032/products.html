@@ -17,6 +17,7 @@
             <div class="products">
                 <div class="buttons">
                     <button type="button" class="green --create">Create</button>
+                    <div class="seed">seed local storage</div>
                 </div>
                 <div class="list --list">
                     <div class="loading">Loading...</div>
@@ -59,6 +60,28 @@
                 <h2>Are you sure to delete <span class="product--title"></span>?</h2>
                 <div class="buttons">
                     <button type="button" class="green --submit">Yes</button>
+                    <button type="button" class="gray --close">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal modal--edit --modal">
+            <div class="card">
+                <h2>Edit</h2>
+                <div class="input">
+                    <div>Product Title</div>
+                    <input type="text" name="productTitle">
+                </div>
+                <div class="input">
+                    <div>Product Price</div>
+                    <input type="text" name="productPrice">
+                </div>
+                <div class="input">
+                    <div>Product Description</div>
+                    <textarea name="productDesc"></textarea>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="green --submit">Save</button>
                     <button type="button" class="gray --close">Cancel</button>
                 </div>
             </div>

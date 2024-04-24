@@ -18,6 +18,18 @@ h2 {
     letter-spacing: 10px;
 }
 
+.seed {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 10px;
+    color: gainsboro;
+    cursor: pointer;
+    &:hover {
+        color: gray;
+    }
+}
+
 button {
     border: none;
     cursor: pointer;
