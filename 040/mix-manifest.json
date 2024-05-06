@@ -1,5 +1,6 @@
 {
     "/public/app.js": "/public/app.js",
     "/public/style.css": "/public/style.css",
-    "/public/index.html": "/public/index.html"
+    "/public/index.html": "/public/index.html",
+    "/public/random.html": "/public/random.html"
 }

@@ -9,6 +9,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     .buttons {
         display: flex;
         justify-content: center;
@@ -25,5 +26,29 @@ body {
             letter-spacing: 4px;
             text-transform: uppercase;
         }
+    }
+}
+
+.digits {
+    display: flex;
+    gap: 10px;
+    font-size: 30px;
+    font-family: monospace;
+    margin-bottom: 50px;
+    color: skyblue;
+}
+
+
+section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .super-digit {
+        color: skyblue;
+        font-size: 200px;
+        font-weight: bold;
+        font-family: monospace;
     }
 }
