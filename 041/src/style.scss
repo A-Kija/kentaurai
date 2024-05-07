@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    font-size: 20px;
+}
+
+main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .top {
+        height: 100px;
+        padding: 20px;
+        margin: 20px;
+        border-bottom: 3px solid gray;
+    }
+    .content {
+        display: flex;
+    }
+}
