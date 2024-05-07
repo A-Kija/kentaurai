@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost/style.css">
+    <title>ZOO</title>
+</head>
+<body>
+
+    <main>
+        <div class="top">
+
+            <form action="http://localhost/add-animal" method="post">
+
+                <input type="text" name="animal">
+                <button type="submit">ADD</button>
+
+            </form>
+
+
+            
+            
+            <a class="sort" href="http://localhost?sort=asc">Sort A-Z</a>
+            <a class="sort" href="http://localhost?sort=desc">Sort Z-A</a>
+
+        </div>
+        <div class="content">
+            <ul>{{LIST}}</ul>
+        </div>
+    </main>
+    
+</body>
+</html>

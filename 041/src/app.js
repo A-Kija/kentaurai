@@ -22,9 +22,17 @@ window.addEventListener('load', _ => {
 
     });
 
-    const getAllAnimals = _ => {
+    document.querySelector('.a-z').addEventListener('click', _ => {
+        getAllAnimals('asc');
+    });
+    
+    document.querySelector('.z-a').addEventListener('click', _ => {
+        getAllAnimals('desc');
+    });
+
+    const getAllAnimals = (sort = '') => {
         const ul = document.querySelector('ul');
-        axios.get('http://localhost/get-animals')
+        axios.get('http://localhost/get-animals?sort=' + sort)
         .then(res => {
             let html = '';
             res.data.animals.forEach(a => {

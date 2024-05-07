@@ -33,8 +33,16 @@ app.post('/add-animal', (req, res) => {
 app.get('/get-animals', (req, res) => {
 
     let data = fs.readFileSync('./data/animals.json', 'utf8');
-
+ 
     data = JSON.parse(data);
+
+    const sort = req.query.sort;
+
+    if (sort === 'asc') {
+        data.sort((a, b) => a.animal.localeCompare(b.animal));
+    } else if (sort === 'desc') {
+        data.sort((a, b) => b.animal.localeCompare(a.animal));
+    }
 
     res.json({
         message: 'OK',
@@ -47,6 +55,13 @@ app.get('/show-animal/:uuid', (req, res) => {
 
     let html = fs.readFileSync('./data/animal.html', 'utf8');
 
+    let data = fs.readFileSync('./data/animals.json', 'utf8');
+
+    data = JSON.parse(data);
+
+    const find = data.find(a => a.id === req.params.uuid);
+
+    html = html.replace('{{ANIMAL}}', find.animal);
 
     res.send(html);
 

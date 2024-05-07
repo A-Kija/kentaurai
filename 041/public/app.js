@@ -26,9 +26,16 @@ window.addEventListener('load', function (_) {
       console.log(error);
     });
   });
-  var getAllAnimals = function getAllAnimals(_) {
+  document.querySelector('.a-z').addEventListener('click', function (_) {
+    getAllAnimals('asc');
+  });
+  document.querySelector('.z-a').addEventListener('click', function (_) {
+    getAllAnimals('desc');
+  });
+  var getAllAnimals = function getAllAnimals() {
+    var sort = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var ul = document.querySelector('ul');
-    axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('http://localhost/get-animals').then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('http://localhost/get-animals?sort=' + sort).then(function (res) {
       var html = '';
       res.data.animals.forEach(function (a) {
         html += "\n                <li>\n                    <span>".concat(a.animal, "</span>\n                    <a href=\"http://localhost/show-animal/").concat(a.id, "\">show</a>\n                </li>\n                ");
