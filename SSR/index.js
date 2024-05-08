@@ -25,9 +25,7 @@ app.post('/add-animal', (req, res) => {
 
     fs.writeFileSync('./data/animals.json', data);
 
-    res.json({
-        message: 'OK'
-    });
+    res.redirect(302, 'http://localhost/');
 
 });
 
