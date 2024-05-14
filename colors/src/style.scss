@@ -1,1 +1,30 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
+.color-in-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    &__color {
+        &__id {
+            width: 100px;
+            font-family: monospace;
+        }
+        &__color-shape {
+            width: 80px;
+            height: 80px;
+            &.circle {
+                border-radius: 50%;
+            }
+            &.rounded {
+                border-radius: 10px;
+            }
+        }
+    }
+    &__buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+    }
+}
