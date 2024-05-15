@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://colors.test/style.css">
+    <script src="http://colors.test/app.js"></script>
+    <title>Confirm color delete</title>
+</head>
+
+<body>
+    {{NAV}}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-7">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h1>Confirm color delete</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="confirm-delete">
+                            <h5 class="card-title">Are you sure?</h5>
+                            <div class="confirm-delete__color-shape shape-{{SHAPE}}"
+                                style="background-color: COLOR;">
+                            </div>
+                        </div>
+                        <form action="http://colors.test/destroy/{{ID}}" method="post">
+                            <div class="m-3 mt-5">
+                                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                <a href="http://colors.test/" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

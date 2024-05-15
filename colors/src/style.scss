@@ -5,26 +5,114 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+
     &__color {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+
         &__id {
-            width: 100px;
+            width: 300px;
             font-family: monospace;
+            font-size: 11px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
         }
+
         &__color-shape {
             width: 80px;
             height: 80px;
-            &.circle {
+
+            &.shape-1 {
                 border-radius: 50%;
             }
-            &.rounded {
+
+            &.shape-3 {
                 border-radius: 10px;
             }
         }
     }
+
     &__buttons {
         display: flex;
         justify-content: flex-end;
         align-items: center;
         gap: 10px;
+    }
+}
+
+.confirm-delete {
+    display: flex;
+    width: 100%;
+    position: relative;
+
+    h5 {
+        padding-left: 20px;
+    }
+
+    &__color-shape {
+        position: absolute;
+        right: 10px;
+        width: 120px;
+        height: 120px;
+
+        &.shape-1 {
+            border-radius: 50%;
+        }
+
+        &.shape-3 {
+            border-radius: 10px;
+        }
+    }
+}
+
+.edit {
+    display: flex;
+    width: 100%;
+    position: relative;
+
+    h5 {
+        padding-left: 20px;
+    }
+
+    &__color-shape {
+        position: absolute;
+        right: 10px;
+        width: 120px;
+        height: 120px;
+
+        &.shape-1 {
+            border-radius: 50%;
+        }
+
+        &.shape-3 {
+            border-radius: 10px;
+        }
+    }
+}
+
+.not-found {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    h1 {
+        text-align: center;
+        font-size: 60px;
+        letter-spacing: 5px;
+    }
+
+    h5 a {
+        text-align: center;
+        font-size: 20px;
+        text-decoration: none;
+        color: black;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
