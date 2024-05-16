@@ -1,13 +1,13 @@
 import 'bootstrap';
 
-window.addEventListener('load', _ => {
+// window.addEventListener('load', _ => {
 
-    if (document.querySelector('.with-csr')) {
+//     if (document.querySelector('.with-csr')) {
 
-        const checkedInput = document.querySelector(`#shape${shape}`);
-        checkedInput.checked = true;
+//         const checkedInput = document.querySelector(`#shape${shape}`);
+//         checkedInput.checked = true;
 
-    }
-});
+//     }
+// });
 
 
