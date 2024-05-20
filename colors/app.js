@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { v4: uuidv4 } = require('uuid');
+const md5 = require('md5');
 const app = express();
 const port = 80;
 
@@ -186,6 +187,28 @@ app.post('/update/:id', (req, res) => {
     fs.writeFileSync('./data/colors.json', data);
 
     addMessage(req.sessionsId, 'New color was edited', 'success');
+
+    res.redirect(302, 'http://colors.test');
+});
+
+app.get('/register', (req, res) => {
+    let html = fs.readFileSync('./data/register.html', 'utf8');
+    const nav = fs.readFileSync('./data/nav.html', 'utf8');
+    html = html.replace('{{NAV}}', nav).replace('{{MSG}}', showMessage(req.sessionsId));
+    res.send(html);
+});
+
+app.post('/register', (req, res) => {
+    const email = req.body.email;
+    const password = md5(req.body.password);
+    const id = uuidv4();
+    let data = fs.readFileSync('./data/users.json', 'utf8');
+    data = JSON.parse(data);
+    data.push({ id, email, password });
+    data = JSON.stringify(data);
+    fs.writeFileSync('./data/users.json', data);
+
+    addMessage(req.sessionsId, 'You are successfully registered', 'success');
 
     res.redirect(302, 'http://colors.test');
 });

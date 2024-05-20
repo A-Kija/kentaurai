@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://colors.test/style.css">
+    <script src="http://colors.test/app.js"></script>
+    <title>Register</title>
+</head>
+
+<body>
+
+    {{NAV}}
+
+    {{MSG}}
+
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-7">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h1>Register</h1>
+                    </div>
+                    <form action="http://colors.test/register" method="post">
+                        <div class="container text-center">
+                            <div class="row g-3 m-2 align-items-center">
+                                <div class="col-2">
+                                    <label class="col-form-label">Email</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" class="form-control" name="email" autocomplete="email">
+                                </div>
+                                <div class="col-auto">
+                                    <span class="form-text">
+                                        Must be valid email.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row g-3 m-2 align-items-center">
+                                <div class="col-2">
+                                    <label class="col-form-label">Password</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="password" class="form-control" name="password" autocomplete="current-password">
+                                </div>
+                                <div class="col-auto">
+                                    <span class="form-text">
+                                        Must be 8-20 characters long.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 mb-3">
+                            <button type="submit" class="btn btn-outline-primary">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
