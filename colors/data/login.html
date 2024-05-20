@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://colors.test/style.css">
+    <script src="http://colors.test/app.js"></script>
+    <title>Login</title>
+</head>
+
+<body>
+
+    {{MSG}}
+
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h1>Login</h1>
+                    </div>
+                    <form action="http://colors.test/login" method="post">
+                        <div class="container text-center">
+                            <div class="row g-3 m-2 align-items-center">
+                                <div class="col-3">
+                                    <label class="col-form-label">Email</label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="email" autocomplete="email">
+                                </div>
+                            </div>
+                            <div class="row g-3 m-2 align-items-center">
+                                <div class="col-3">
+                                    <label class="col-form-label">Password</label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="password" class="form-control" name="password" autocomplete="current-password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 mb-3">
+                            <button type="submit" class="btn btn-outline-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
