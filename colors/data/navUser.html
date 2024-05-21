@@ -1,8 +1,10 @@
 <ul class="navbar-nav mb-2 mb-lg-0">
     <li class="nav-item">
-        <a class="nav-link">Name</a>
+        <a class="nav-link">{{NAME}}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="http://colors.test/login">Logout</a>
+        <form action="http://colors.test/logout" method="post">
+            <button type="submit" class="nav-link">logout</button>
+        </form>
     </li>
 </ul>
