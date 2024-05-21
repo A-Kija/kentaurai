@@ -2975,6 +2975,14 @@ __webpack_require__.r(__webpack_exports__);
 //     }
 // });
 
+window.addEventListener('load', function (_) {
+  if (document.querySelector('.alert')) {
+    setTimeout(function (_) {
+      document.querySelector('.alert').remove();
+    }, 5000);
+  }
+});
+
 /***/ }),
 
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.esm.js":
