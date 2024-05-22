@@ -58,6 +58,35 @@ const showMessage = id => {
         `;
 }
 
+const addOld = (id, old) => {
+    let data = fs.readFileSync('./data/sessions.json', 'utf8');
+    data = JSON.parse(data);
+    data = data.map(s => s.id === id ? { id, d: { ...s.d, old } } : s);
+    data = JSON.stringify(data);
+    fs.writeFileSync('./data/sessions.json', data);
+}
+
+const showOld = (id, html) => {
+    const allOlds = ['email', 'color'];
+    let data = fs.readFileSync('./data/sessions.json', 'utf8');
+    data = JSON.parse(data);
+    const session = data.find(s => s.id === id);
+    if (!session || !session.d?.old) {
+        allOlds.forEach(o => {
+            html = html.replace(`{{${o}}}`, '');
+        });
+    } else {
+        for (const k in session.d.old) {
+            html = html.replace(`{{${k}}}`, session.d.old[k]);
+        }
+        delete session.d.old;
+        data = JSON.stringify(data);
+        fs.writeFileSync('./data/sessions.json', data);
+    }
+    return html;
+}
+
+
 const loginUser = (id, user) => {
     let data = fs.readFileSync('./data/sessions.json', 'utf8');
     data = JSON.parse(data);
@@ -156,7 +185,9 @@ app.get('/create', (req, res) => {
     }
 
     let html = fs.readFileSync('./data/create.html', 'utf8');
+    html = html.replace('{{MSG}}', showMessage(req.sessionsId))
     html = addNav(req.sessionsId, html);
+    html = showOld(req.sessionsId, html);
     res.send(html);
 });
 
@@ -166,6 +197,12 @@ app.post('/store', (req, res) => {
     if (!isLogged(req.sessionsId)) {
         res.redirect(302, 'http://colors.test/login').end();
     }
+
+    // if (true) {
+    //     addMessage(req.sessionsId, 'Test error', 'danger');
+    //     addOld(req.sessionsId, {color: req.body.color});
+    //     res.redirect(302, 'http://colors.test/create').end();
+    // }
 
     const color = req.body.color;
     const shape = parseInt(req.body.shape);
@@ -293,6 +330,7 @@ app.get('/register', (req, res) => {
     let html = fs.readFileSync('./data/register.html', 'utf8');
     html = html.replace('{{MSG}}', showMessage(req.sessionsId));
     html = addNav(req.sessionsId, html);
+    html = showOld(req.sessionsId, html);
     res.send(html);
 });
 
@@ -304,6 +342,9 @@ app.post('/register', (req, res) => {
 
     if (req.body.password.length < 3) {
         addMessage(req.sessionsId, 'Password is too short', 'danger');
+
+        addOld(req.sessionsId, {email: req.body.email});
+
         res.redirect(302, 'http://colors.test/register').end();
     }
 
