@@ -1,0 +1,26 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "description": "Trees manager with DB",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "npx mix watch"
+  },
+  "author": "Tree Man",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "bootstrap": "^5.3.3",
+    "express": "^4.19.2",
+    "laravel-mix": "^6.0.49",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.1.0",
+    "sass": "^1.77.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "resolve-url-loader": "^5.0.0",
+    "sass-loader": "^12.1.0"
+  }
+}
