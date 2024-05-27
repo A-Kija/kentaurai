@@ -60,12 +60,16 @@ app.post('/plant', (req, res) => {
     //  INSERT INTO table_name (column1, column2, column3, ...)
     //  VALUES (value1, value2, value3, ...);
 
-    const sql = `
-        INSERT INTO trees (name, height, type)
-        VALUES ( '${name}', ${parseFloat(height)}, '${type}' )
-    `;
+    // const sql = `
+    //     INSERT INTO trees (name, height, type)
+    //     VALUES ( '${name}', ${parseFloat(height)}, '${type}' )
+    // `;
 
-    connection.query(sql, err => {
+    const sql = `
+    INSERT INTO trees (name, height, type)
+    VALUES ( ?, ?, ? )
+`;
+    connection.query(sql, [name, parseFloat(height), type], err => {
         if (err) throw err;
         res.redirect(302, 'http://localhost:8080/');
     });
@@ -80,11 +84,38 @@ app.post('/cut', (req, res) => {
 
     // DELETE FROM trees WHERE id = 888 OR 1
 
+    // const sql = `
+    // DELETE FROM trees
+    // WHERE id = ${id}
+
     const sql = `
     DELETE FROM trees
-    WHERE id = ${id}
+    WHERE id = ?
 `;
-    connection.query(sql, err => {
+    connection.query(sql, [id], err => {
+        if (err) throw err;
+        res.redirect(302, 'http://localhost:8080/');
+    });
+
+});
+
+
+
+
+app.post('/water', (req, res) => {
+
+    const { id, height } = req.body;
+
+    // UPDATE table_name
+    // SET column1 = value1, column2 = value2, ...
+    // WHERE condition;
+
+    const sql = `
+    UPDATE trees
+    SET height = ?
+    WHERE id = ?
+`;
+    connection.query(sql, [parseFloat(height), id], err => {
         if (err) throw err;
         res.redirect(302, 'http://localhost:8080/');
     });
