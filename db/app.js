@@ -31,7 +31,7 @@ app.get('/', (_, res) => {
         SELECT id, name, height, type
         FROM trees
         -- WHERE height > 5
-        ORDER BY type, height DESC
+        -- ORDER BY type, height DESC
     `;
 
     connection.query(sql, (err, rows) => {
@@ -41,15 +41,54 @@ app.get('/', (_, res) => {
         rows.forEach(tree => {
             let liHtml = listItem;
             liHtml = liHtml
-            .replace('{{ID}}', tree.id)
-            .replace('{{NAME}}', tree.name)
-            .replace('{{HEIGHT}}', tree.height)
-            .replace('{{TYPE}}', tree.type);
+                .replace('{{ID}}', tree.id)
+                .replace('{{NAME}}', tree.name)
+                .replace('{{HEIGHT}}', tree.height)
+                .replace('{{TYPE}}', tree.type);
             listItems += liHtml;
         });
         html = html.replace('{{LI}}', listItems)
         res.send(html);
     });
+});
+
+
+app.post('/plant', (req, res) => {
+
+    const { name, height, type } = req.body;
+
+    //  INSERT INTO table_name (column1, column2, column3, ...)
+    //  VALUES (value1, value2, value3, ...);
+
+    const sql = `
+        INSERT INTO trees (name, height, type)
+        VALUES ( '${name}', ${parseFloat(height)}, '${type}' )
+    `;
+
+    connection.query(sql, err => {
+        if (err) throw err;
+        res.redirect(302, 'http://localhost:8080/');
+    });
+});
+
+
+app.post('/cut', (req, res) => {
+
+    const id = req.body.id;
+
+    // DELETE FROM table_name WHERE condition;
+
+    // DELETE FROM trees WHERE id = 888 OR 1
+
+    const sql = `
+    DELETE FROM trees
+    WHERE id = ${id}
+`;
+    connection.query(sql, err => {
+        if (err) throw err;
+        res.redirect(302, 'http://localhost:8080/');
+    });
+
 });
 
 
