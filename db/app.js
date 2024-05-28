@@ -19,6 +19,71 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
+app.get('/stat', (_, res) => {
+
+    let html = fs.readFileSync('./data/stats.html', 'utf8');
+
+    // SELECT MIN(Price)
+    // FROM Products;
+
+    
+    const sql = `
+        SELECT MIN(height) AS min, MAX(height) AS max
+        FROM trees
+    `;
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw err;
+
+
+        console.log(rows);
+
+
+        res.send(html);
+    });
+
+
+    
+
+});
+
+
+app.get('/find', (req, res) => {
+
+    let html = fs.readFileSync('./data/find.html', 'utf8');
+    const listItem = fs.readFileSync('./data/listItem.html', 'utf8');
+
+    // SELECT column1, column2, ...
+    // FROM table_name;
+
+    const s = req.query.s;
+
+    const sql = `
+        SELECT id, name, height, type
+        FROM trees
+        WHERE name LIKE ?
+    `;
+
+    connection.query(sql, ['%' + s + '%'], (err, rows) => {
+        if (err) throw err;
+
+        let listItems = '';
+        rows.forEach(tree => {
+            let liHtml = listItem;
+            liHtml = liHtml
+                .replace('{{ID}}', tree.id)
+                .replace('{{NAME}}', tree.name)
+                .replace('{{HEIGHT}}', tree.height)
+                .replace('{{TYPE}}', tree.type);
+            listItems += liHtml;
+        });
+        html = html.replace('{{LI}}', listItems).replace('{{S}}', s);
+        res.send(html);
+    });
+});
+
+
+
 app.get('/', (_, res) => {
 
     let html = fs.readFileSync('./data/index.html', 'utf8');
@@ -55,7 +120,13 @@ app.get('/', (_, res) => {
 
 app.post('/plant', (req, res) => {
 
-    const { name, height, type } = req.body;
+    let { name, height, type } = req.body;
+
+    // sanitization
+    height = parseFloat(height);
+    isNaN(height) && (height = 0);
+    !['lapuotis', 'spygliuotis', 'palmė'].includes(type) && (type = 'lapuotis');
+    !name && (name = '---');
 
     //  INSERT INTO table_name (column1, column2, column3, ...)
     //  VALUES (value1, value2, value3, ...);
@@ -69,11 +140,12 @@ app.post('/plant', (req, res) => {
     INSERT INTO trees (name, height, type)
     VALUES ( ?, ?, ? )
 `;
-    connection.query(sql, [name, parseFloat(height), type], err => {
+    connection.query(sql, [name, height, type], err => {
         if (err) throw err;
         res.redirect(302, 'http://localhost:8080/');
     });
 });
+
 
 
 app.post('/cut', (req, res) => {

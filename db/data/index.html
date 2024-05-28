@@ -6,10 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http://localhost:8080/style.css">
     <script src="http://localhost:8080/app.js"></script>
-    <title>Welcome to Colors Manager</title>
+    <title>Welcome to the FOREST</title>
 </head>
 
 <body>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-4">
+                <div class="card mt-5">
+                    <form class="card-body" action="http://localhost:8080/find" method="get">
+                        <div class="mb-3">
+                            <label class="form-label">tree name</label>
+                            <input type="text" class="form-control" name="s">
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <button type="submit" class="btn btn-outline-primary">Find</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="container text-center">
         <div class="row">
@@ -17,6 +36,7 @@
                 <div class="card mt-5">
                     <div class="card-header">
                         <h1>Tree list</h1>
+                        <a href="http://localhost:8080/stat">about</a>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
@@ -63,6 +83,7 @@
                         <div class="mb-3">
                             <label class="form-label">Tipas</label>
                             <select class="form-select" name="type">
+                                <option value="">select tree type</option>
                                 <option value="lapuotis">lapuotis</option>
                                 <option value="spygliuotis">spygliuotis</option>
                                 <option value="palmė">palmė</option>
