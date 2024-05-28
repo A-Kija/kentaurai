@@ -19,6 +19,44 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
+
+app.get('/book', (_, res) => {
+
+    let html = fs.readFileSync('./data/book.html', 'utf8');
+    const listItem = fs.readFileSync('./data/listItem2.html', 'utf8');
+
+    // SELECT ProductID, ProductName, CategoryName
+    // FROM Products
+    // INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;
+
+
+    const sql = `
+        SELECT c.id, c.name, p.number
+        FROM clients AS c
+        INNER JOIN phones AS p
+        ON c.id = p.client_id
+
+    `;
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw err;
+
+        let listItems = '';
+        rows.forEach(client => {
+            let liHtml = listItem;
+            liHtml = liHtml
+                .replace('{{ID}}', client.id)
+                .replace('{{NAME}}', client.name)
+                .replace('{{PHONE}}', client.number)
+            listItems += liHtml;
+        });
+        html = html.replace('{{LI}}', listItems)
+        res.send(html);
+    });
+});
+
+
+
 app.get('/stat', (_, res) => {
 
     let html = fs.readFileSync('./data/stats.html', 'utf8');
@@ -28,16 +66,19 @@ app.get('/stat', (_, res) => {
 
     
     const sql = `
-        SELECT MIN(height) AS min, MAX(height) AS max
+        SELECT MIN(height) AS min, MAX(height) AS max, COUNT(*) AS count, SUM(height) AS sum, AVG(height) AS avg
         FROM trees
     `;
 
     connection.query(sql, (err, rows) => {
         if (err) throw err;
 
-
-        console.log(rows);
-
+        html = html
+        .replace('{{MAX}}', rows[0].max)
+        .replace('{{MIN}}', rows[0].min)
+        .replace('{{SUM}}', rows[0].sum)
+        .replace('{{COUNT}}', rows[0].count)
+        .replace('{{AVG}}', rows[0].avg);
 
         res.send(html);
     });
