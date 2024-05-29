@@ -24,6 +24,7 @@ app.get('/book', (_, res) => {
 
     let html = fs.readFileSync('./data/book.html', 'utf8');
     const listItem = fs.readFileSync('./data/listItem2.html', 'utf8');
+    const phoneItem = fs.readFileSync('./data/phoneItem.html', 'utf8');
 
     // SELECT ProductID, ProductName, CategoryName
     // FROM Products
@@ -31,23 +32,45 @@ app.get('/book', (_, res) => {
 
 
     const sql = `
-        SELECT c.id, c.name, p.number
+        SELECT c.id, p.id AS pid, c.name, p.number
         FROM clients AS c
         INNER JOIN phones AS p
         ON c.id = p.client_id
+        ORDER BY c.name
 
     `;
 
     connection.query(sql, (err, rows) => {
         if (err) throw err;
 
-        let listItems = '';
+        const clients = [];
+
         rows.forEach(client => {
+            const clientFromList = clients.find(c => c.id === client.id);
+            if (!clientFromList) {
+                clients.push({...client, number: [client.number], pid: [client.pid]});
+            } else {
+                clientFromList.number.push(client.number);
+                clientFromList.pid.push(client.pid);
+            }
+        });
+
+        let listItems = '';
+        clients.forEach(client => {
             let liHtml = listItem;
+            let listItems2 = '';
+            client.pid.forEach((p, i) => {
+                let pItem = phoneItem;
+                pItem = pItem
+                .replace('{{PID}}', p)
+                .replace('{{PHONE}}', client.number[i]);
+                listItems2 += pItem;
+            });
+
             liHtml = liHtml
                 .replace('{{ID}}', client.id)
                 .replace('{{NAME}}', client.name)
-                .replace('{{PHONE}}', client.number)
+                .replace('{{PHONES}}', listItems2)
             listItems += liHtml;
         });
         html = html.replace('{{LI}}', listItems)
