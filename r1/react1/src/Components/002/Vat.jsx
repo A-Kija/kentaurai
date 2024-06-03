@@ -1,9 +1,9 @@
-import './vat.css';
+import './vat.scss';
 export default function Vat({ color, productPrice, show } ) {
 
     // const { color, productPrice } = props;
 
-    console.log(productPrice, color, show);
+    // console.log(productPrice, color, show);
 
     const vat = productPrice / 100 * 21;
 

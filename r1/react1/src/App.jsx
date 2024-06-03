@@ -1,16 +1,16 @@
 import './App.css';
-import Vat from './Components/002/Vat';
+import Price from './Components/002/Price2';
 function App() {
 
 
-    const price = 260;
+    const price = 100;
+    const vatColor = 'orange';
 
     return (
         <div className="App">
             <header className="App-header">
                 <h1>002</h1>
-                <div><span>Price:</span> <b>{price} Eur</b></div>
-                <Vat productPrice={price} color='skyblue' show={'small'} />
+                <Price productPrice={price} discount={20} vatColor={vatColor}/>
             </header>
         </div>
     );
