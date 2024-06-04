@@ -1,6 +1,9 @@
 import './App.css';
 import Fruit from './Components/003/Fruit';
 import Fig from './Components/003/Fig';
+import './buttons.scss';
+import { useState } from 'react';
+// import { useRef } from 'react';
 function App() {
 
     const fruits = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'honeydew', 'kiwi', 'lemon', 'mango', 'nectarine', 'orange', 'pear', 'quince', 'raspberry', 'strawberry', 'tangerine', 'ugli', 'watermelon'];
@@ -26,10 +29,45 @@ function App() {
     ];
 
 
+
+    // const bf = useRef(false);
+
+    const [count, setCount] = useState(100);
+
+
+
+    const blueClick = _ => {
+        // if (!bf.current) {
+        //     console.log('Blue Clicked!');
+        //     bf.current = true;
+        // }
+        console.log('Blue Clicked!');
+
+        setCount(c => c + 1);
+        setCount(c => c + 1);
+        setCount(c => c + 1);
+
+    }
+
+    const redClick = what => {
+        console.log('Red Clicked!', what);
+    }
+
+    const buttonClick = (e, v = '') => {
+        console.log('Button Clicked!', e.target.classList[0], v);
+    }
+
+
     return (
         <div className="App">
             <header className="App-header">
-                <h1>003</h1>
+                <h1>{count}</h1>
+                <button type="button" className="blue" onClick={blueClick}>Click!</button>
+                <button type="button" className="red" onClick={_ => redClick('Ką tu?')}>Click!</button>
+                <button type="button" className="yellow" onClick={e => buttonClick(e, 'Valio')}>Click!</button>
+                <button type="button" className="white" onClick={e => buttonClick(e)}>Click!</button>
+                <button type="button" className="green" onClick={buttonClick}>Click!</button>
+                <button type="button" className="blue" onClick={_ => console.log('******')}>Click!</button>
                 <ul>
                     {
                         fruits2.map(f => f.name !== 'fig'
