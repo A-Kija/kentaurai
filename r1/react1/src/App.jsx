@@ -1,48 +1,48 @@
-import { useRef, useState } from 'react';
-
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import './buttons.scss';
-import Buttons from './Components/005/Buttons';
-import Counter from './Components/005/Counter';
-import randomColor from './Functions/randColor';
-import SqBin from './Components/005/SqBin';
-import SqButtons from './Components/005/SqButtons';
-import Parent from './Components/005/Parent';
-import Link from './Components/005/Link';
 function App() {
 
-    const [counter, setCounter] = useState(50);
-    const [sq, setSq] = useState([]);
+    const [count1, setCount1] = useState(0);
+    const [count2, setCount2] = useState(0);
 
-    const id = useRef(1);
+    const greenLoaded = useRef(false);
 
-    const addSq = _ => {
-        setSq(a => [...a, {
-            id: id.current++,
-            color: randomColor(),
-            rotate: 0
-        }]);
+    // console.log('OUTSIDE USE EFFECT');
+
+    useEffect(_ => {
+        if (!greenLoaded.current) {
+            greenLoaded.current = true;
+            return;
+        }
+        console.log('REFRESH BY GREEN!', count1);
+    }, [count1]);
+
+    useEffect(_ => {
+        console.log('REFRESH BY YELLOW!');
+    }, [count2]);
+
+    // useEffect(_ => {
+    //     console.log('REFRESH BY YELLOW OR GREEN!');
+    // }, [count1, count2]);
+
+    const clickGreen = _ => {
+        setCount1(c => c + 1);
     }
 
-    const rotateSq = id => {
-        setSq(a => a.map(s => s.id === id ? { ...s, rotate: s.rotate + 15 } : s));
+    const clickYellow = _ => {
+        setCount2(c => c + 1);
     }
+
 
     return (
         <div className="App">
             <header className="App-header">
-                <Counter counter={counter} />
-                <Buttons setCounter={setCounter} />
-                <SqBin sq={sq} rotateSq={rotateSq} />
-                <SqButtons addSq={addSq} />
-                <Parent>
-                    <h2>I'm here!</h2>
-                </Parent>
-                <Link to="https://google.com">
-                <div>Go to GOOGLE<span>-----</span></div>
-                <div>Run to GOOGLE</div>
-                <div>Dont go to GOOGLE</div>
-                </Link>
+                <h1>Use Effect</h1>
+                <div className="buttons">
+                    <button type="button" className="green" onClick={clickGreen}>{count1}</button>
+                    <button type="button" className="yellow" onClick={clickYellow}>{count2}</button>
+                </div>
             </header>
         </div>
     );

@@ -1,0 +1,42 @@
+.fields {
+    display: flex;
+    height: 100vh;
+    background-color: darkolivegreen;
+    width: 80%;
+    box-sizing: border-box;
+
+    .field {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        height: 100vh;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 50%;
+        box-sizing: border-box;
+        padding: 200px 20px 20px 20px;
+        &.first {
+            border-right: 3px dashed darkgreen;
+        }
+        .sheep,
+        .cow {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: monospace;
+            border: 1px solid white;
+            font-size: 12px;
+        }
+        .sheep {
+            border-radius: 50%;
+        }
+    }
+    .buttons {
+        position: fixed;
+        top: 0;
+        height: 100px;
+    }
+}
