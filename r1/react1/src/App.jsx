@@ -1,47 +1,58 @@
-import { useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import './buttons.scss';
+import Sq from './Components/007/Sq';
+import rand from './Functions/rand';
 function App() {
 
-    const [count1, setCount1] = useState(0);
-    const [count2, setCount2] = useState(0);
 
-    const greenLoaded = useRef(false);
+    const [countLetter, setCountLetter] = useState(3);
+    const [letters, setLetters] = useState('');
+    const [sq, setSq] = useState([]);
 
-    // console.log('OUTSIDE USE EFFECT');
-
-    useEffect(_ => {
-        if (!greenLoaded.current) {
-            greenLoaded.current = true;
-            return;
+    const makeLetters = useCallback( _ => {
+        if (countLetter <= 5) {
+            setLetters('A'.repeat(countLetter));
+        } else {
+            setLetters('B'.repeat(countLetter));
         }
-        console.log('REFRESH BY GREEN!', count1);
-    }, [count1]);
+    }, [setLetters, countLetter]);
+
+    const doCount = _ => {
+        setCountLetter(c => c + 1);
+    }
+
+    const makeSq = _ => {
+        setSq(s => [{id: rand(1000000, 9999999)}, ...s]);
+    }
+    
+    const destroySq = id => {
+        setSq(s => s.filter(sq => sq.id !== id));
+    }
 
     useEffect(_ => {
-        console.log('REFRESH BY YELLOW!');
-    }, [count2]);
+        makeLetters();
+    }, [countLetter, makeLetters]);
 
-    // useEffect(_ => {
-    //     console.log('REFRESH BY YELLOW OR GREEN!');
-    // }, [count1, count2]);
+    useEffect(_ => {
+        console.log(sq.length);
+    }, [sq]);
 
-    const clickGreen = _ => {
-        setCount1(c => c + 1);
-    }
 
-    const clickYellow = _ => {
-        setCount2(c => c + 1);
-    }
 
 
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Use Effect</h1>
+                <div className="sq-bin">
+                    {
+                        sq.map(s => <Sq key={s.id} sq={s} destroySq={destroySq} />)
+                    }
+                </div>
+                <h1>{letters}</h1>
                 <div className="buttons">
-                    <button type="button" className="green" onClick={clickGreen}>{count1}</button>
-                    <button type="button" className="yellow" onClick={clickYellow}>{count2}</button>
+                    <button type="button" className="green" onClick={doCount}>{countLetter}</button>
+                    <button type="button" className="blue" onClick={makeSq}>ADD []</button>
                 </div>
             </header>
         </div>
