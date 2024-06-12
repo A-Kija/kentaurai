@@ -69,3 +69,11 @@ input {
   font-size: 20px;
   margin: 5px;
 }
+
+
+select {
+  outline: none;
+  padding: 3px 6px;
+  font-size: 20px;
+  margin: 5px;
+}
