@@ -1,102 +1,49 @@
-import { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import './buttons.scss';
-import Sq from './Components/007/Sq';
-import rand from './Functions/rand';
+import { useState, useRef } from 'react';
 function App() {
 
+    const text2 = useRef();
 
-    const [countLetter, setCountLetter] = useState(3);
-    const [letters, setLetters] = useState('');
-    // const [sq, setSq] = useState(_ => JSON.parse(localStorage.getItem('sq') ?? '[]'));
-    const [sq, setSq] = useState(null);
-
-
-    useEffect(_ => {
-
-        setTimeout(_ => {
-            setSq(JSON.parse(localStorage.getItem('sq') ?? '[]'));
-        }, 2000);
-
-    }, [setSq]);
+    const [text1, setText1] = useState('');
+    const [error, setError] = useState(false);
 
 
-    useEffect(_ => {
-        if (sq === null) {
+    const handleText1 = e => {
+        if (e.target.value.length > 5) {
+            setError(true);
             return;
-        }
-        localStorage.setItem('sq', JSON.stringify(sq));
-    }, [sq]);
-
-
-    const makeLetters = useCallback(_ => {
-        if (countLetter <= 5) {
-            setLetters('A'.repeat(countLetter));
         } else {
-            setLetters('B'.repeat(countLetter));
+            setError(false);
         }
-    }, [setLetters, countLetter]);
-
-    const doCount = _ => {
-        setCountLetter(c => c + 1);
+        setText1(e.target.value);
     }
 
-    // const makeSq = _ => {
-    //     setSq(s => {
-    //         const newSq = [{id: rand(1000000, 9999999)}, ...s];
-    //         localStorage.setItem('sq', JSON.stringify(newSq));
-    //         return newSq;
-    //     });
-    // }
-    const makeSq = _ => {
-        setSq(s => [{ id: rand(1000000, 9999999) }, ...s]);
+    // niekam tikęs būdas skaiyti inputus
+    const readRed = _ => {
+        // const el = document.querySelector('#text2'); niekada!
+        // el yra text2.current
+        console.log('text2:', text2.current.value);
     }
-
-    // const destroySq = id => {
-    //     setSq(s => {
-    //         const newSq = s.filter(sq => sq.id !== id);
-    //         localStorage.setItem('sq', JSON.stringify(newSq));
-    //         return newSq;
-    //     });
-    // }
-
-    const destroySq = id => {
-        setSq(s => s.filter(sq => sq.id !== id));
-    }
-
-    useEffect(_ => {
-        makeLetters();
-    }, [countLetter, makeLetters]);
-
-    // useEffect(_ => {
-    //     console.log(sq.length);
-    // }, [sq]);
-
 
 
 
     return (
         <div className="App">
             <header className="App-header">
-                <div className="sq-bin">
-                    {
-                        sq !== null
-                            ?
-                            sq.length
-                                ?
-                                sq.map(s => <Sq key={s.id} sq={s} destroySq={destroySq} />)
-                                :
-                                <div>No squares</div>
-                            :
-                            <div>Loading...</div>
-                    }
-                </div>
-                <h1>{letters}</h1>
-                <div className="buttons">
-                    <button type="button" className="green" onClick={doCount}>{countLetter}</button>
-                    <button type="button" className="blue" onClick={makeSq}>ADD []</button>
-                </div>
+                <h1>CONTROLLED INPUTS</h1>
+
+                <fieldset>
+                    <legend>TEXT</legend>
+                    <input type="text" value={text1} onChange={handleText1} style={{backgroundColor: error ? 'crimson' : null }} />
+                    <input type="text" ref={text2} />
+                    <button type="button" className="blue" onClick={_ => console.log('text1:', text1)}>read 1</button>
+                    <button type="button" className="red" onClick={readRed}>read 2</button>
+                </fieldset>
+
             </header>
+
+
         </div>
     );
 }

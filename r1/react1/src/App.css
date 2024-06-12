@@ -60,3 +60,12 @@
   width: 80%;
   flex-wrap: wrap;
 }
+
+
+input {
+  border: none;
+  outline: none;
+  padding: 3px 6px;
+  font-size: 20px;
+  margin: 5px;
+}
