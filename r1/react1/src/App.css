@@ -77,3 +77,32 @@ select {
   font-size: 20px;
   margin: 5px;
 }
+input[type="radio"],
+input[type="checkbox"] {
+  display: none;
+}
+
+.cb-svg svg {
+  fill: white;
+  width: 30px;
+  height: 30px;
+}
+
+div.cb label {
+  height: 30px;
+  cursor: pointer;
+}
+
+span.cb {
+  line-height: 30px;
+  font-size: 30px;
+  padding-right: 10px;
+}
+
+div.cb {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  justify-content: space-between;
+  padding: 3px 0;
+}
