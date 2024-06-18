@@ -2,6 +2,8 @@ import List from './Components/List';
 import './app.scss';
 import * as storage from './Functions/ls';
 import Create from './Components/Create';
+import Delete from './Components/Delete';
+import Edit from './Components/Edit';
 import { useEffect, useState } from 'react';
 
 const dv = {
@@ -18,6 +20,10 @@ export default function App() {
   const [refresh, setRefresh] = useState(Date.now());
   const [create, setCreate] = useState(null);
   const [store, setStore] = useState(null);
+  const [remove, setRemove] = useState(null); // delete
+  const [destroy, setDestroy] = useState(null);
+  const [edit, setEdit] = useState(null);
+  const [update, setUpdate] = useState(null);
 
   useEffect(_ => {
     setColors(storage.lsRead(KEY));
@@ -34,6 +40,24 @@ export default function App() {
     setRefresh(Date.now());
   }, [store]);
 
+  useEffect(_ => {
+    if (null === destroy) {
+      return;
+    }
+    storage.lsDelete(KEY, destroy.id);
+    setDestroy(null);
+    setRefresh(Date.now());
+  }, [destroy]);
+
+  useEffect(_ => {
+    if (null === update) {
+      return;
+    }
+    storage.lsEdit(KEY, update, update.id);
+    setUpdate(null);
+    setRefresh(Date.now());
+  }, [update]);
+
 
   return (
     <>
@@ -47,12 +71,13 @@ export default function App() {
         </div>
         <div className="row">
           <div className="col">
-            <List colors={colors} />
+            <List colors={colors} setRemove={setRemove} setEdit={setEdit} />
           </div>
         </div>
       </div>
       { create !== null && <Create setCreate={setCreate} create={create} setStore={setStore} /> }
-        
+      { remove !== null && <Delete setRemove={setRemove} remove={remove} setDestroy={setDestroy} /> }
+      { edit !== null && <Edit setEdit={setEdit} edit={edit} setUpdate={setUpdate} /> }
     </>
   );
 }

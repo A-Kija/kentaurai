@@ -54,29 +54,60 @@ label.flex-space {
     display: flex;
     gap: 30px;
     align-items: center;
-    .colors {
+    justify-content: space-between;
+    .content {
         display: flex;
-        gap: 10px;
-        .square {
-            width: 50px;
-            height: 50px;
+        gap: 30px;
+        align-items: center;
+        .colors {
+            display: flex;
+            gap: 10px;
+
+            .square {
+                width: 50px;
+                height: 50px;
+                &.small {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .circle {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                &.small {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .rounded {
+                width: 50px;
+                height: 50px;
+                border-radius: 15px;
+                &.small {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .triangle {
+                width: 0;
+                height: 0;
+                border-left: 30px solid transparent;
+                border-right: 30px solid transparent;
+                border-bottom: 40px solid transparent;
+                &.small {
+                    border-left: 15px solid transparent;
+                    border-right: 15px solid transparent;
+                    border-bottom: 20px solid transparent;
+                }
+            }
         }
-        .circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-        .rounded {
-            width: 50px;
-            height: 50px;
-            border-radius: 15px;
-        }
-        .triangle {
-            width: 0; 
-            height: 0; 
-            border-left: 30px solid transparent;
-            border-right: 30px solid transparent;
-            border-bottom: 40px solid transparent;
-        }
+    }
+    .buttons {
+        margin: 0;
+        padding: 0;
     }
 }

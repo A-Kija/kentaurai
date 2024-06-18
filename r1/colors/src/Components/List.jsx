@@ -1,4 +1,4 @@
-export default function List({ colors }) {
+export default function List({ colors, setRemove, setEdit }) {
 
 
     if (null === colors) {
@@ -19,18 +19,18 @@ export default function List({ colors }) {
                             <div>{c.id}</div>
                             <div className="colors">
                                 {
-                                    Array(c.range).fill().map(_ => c.shape !== 'triangle'
+                                    Array(c.range).fill().map((_, i) => c.shape !== 'triangle'
                                         ?
-                                        <div style={{ backgroundColor: c.color }} className={c.shape}></div>
+                                        <div key={i} style={{ backgroundColor: c.color }} className={c.shape}></div>
                                         :
-                                        <div style={{ borderBottomColor: c.color }} className={c.shape}></div>
+                                        <div key={i} style={{ borderBottomColor: c.color }} className={c.shape}></div>
                                     )
                                 }
                             </div>
                         </div>
                         <div className="buttons">
-                            <button type="button" className="green">Edit</button>
-                            <button type="button" className="red">delete</button>
+                            <button type="button" className="green" onClick={_ => setEdit(c)}>Edit</button>
+                            <button type="button" className="red" onClick={_ => setRemove(c)}>Delete</button>
                         </div>
                     </div>
                 </li>)

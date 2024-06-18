@@ -1,24 +1,25 @@
 import { useState } from 'react';
 import { rbc, rbu } from '../Styles/svg';
 
-export default function Create({create, setStore, setCreate}) {
+export default function Edit({edit, setUpdate, setEdit}) {
 
 
-    const [shape, setShape] = useState(create.shape);
-    const [color, setColor] = useState(create.color);
-    const [range, setRange] = useState(create.range);
+    const [shape, setShape] = useState(edit.shape);
+    const [color, setColor] = useState(edit.color);
+    const [range, setRange] = useState(edit.range);
 
     const handleShape = e => {
         setShape(e.target.id);
     }
 
-    const handleCreate = _ => {
-        setStore({
+    const handleEdit = _ => {
+        setUpdate({
+            ...edit,
             shape,
             color,
             range
         });
-        setCreate(null);
+        setEdit(null);
     }
 
     return (
@@ -28,7 +29,7 @@ export default function Create({create, setStore, setCreate}) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Add new color</h5>
-                        <button type="button" className="btn-close" onClick={_ => setCreate(null)}></button>
+                        <button type="button" className="btn-close" onClick={_ => setEdit(null)}></button>
                     </div>
                     <div className="modal-body">
                         <div className="m-2">
@@ -50,12 +51,11 @@ export default function Create({create, setStore, setCreate}) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="green" onClick={handleCreate}>Add</button>
-                        <button type="button" className="red" onClick={_ => setCreate(null)}>Close</button>
+                        <button type="button" className="green" onClick={handleEdit}>Save</button>
+                        <button type="button" className="red" onClick={_ => setEdit(null)}>Close</button>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }
