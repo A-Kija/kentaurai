@@ -29,8 +29,6 @@ export default function App() {
     setColors(storage.lsRead(KEY));
   }, [refresh]);
 
-
-
   useEffect(_ => {
     if (null === store) {
       return;

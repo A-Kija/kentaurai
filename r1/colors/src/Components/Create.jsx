@@ -22,7 +22,6 @@ export default function Create({create, setStore, setCreate}) {
     }
 
     return (
-
         <div className="modal">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
@@ -56,6 +55,5 @@ export default function Create({create, setStore, setCreate}) {
                 </div>
             </div>
         </div>
-
     );
 }

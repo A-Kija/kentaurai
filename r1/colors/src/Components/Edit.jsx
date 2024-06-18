@@ -23,7 +23,6 @@ export default function Edit({edit, setUpdate, setEdit}) {
     }
 
     return (
-
         <div className="modal">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
