@@ -6,10 +6,11 @@ import Delete from './Components/Delete';
 import Edit from './Components/Edit';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import Messages from './Components/Messages';
 
 const dv = {
-  shape: 'square',
+  shape: '',
   color: '#f267d8',
   range: 5
 }
@@ -29,17 +30,31 @@ export default function App() {
 
   const [msg, setMsg] = useState([]);
 
+  const remMessage = useCallback(id => {
+    setMsg(msgs => msgs.filter(m => m.id !== id));
+  }, []);
+
+  const addMessage = useCallback(m => {
+    const id = uuidv4();
+    setMsg(msgs => [{...m, id}, ...msgs]);
+    setTimeout(_ => {
+      remMessage(id);
+    }, 5000);
+  }, [remMessage]);
+
   const getTitle = useCallback((id, color) => {
     axios.get('https://www.thecolorapi.com/id?hex=' + color.substring(1))
     .then(res => {
       const title = res.data.name.value;
       storage.lsEdit(KEY, {title}, id);
+      addMessage({title: 'API', type: 'info', text: 'Color name was successfully received'});
       setRefresh(Date.now());
     })
     .catch(error => {
       console.log(error);
     });
-  }, []);
+  }, [addMessage]);
+
 
   useEffect(_ => {
     setColors(storage.lsRead(KEY));
@@ -50,30 +65,33 @@ export default function App() {
       return;
     }
     const id = storage.lsCreate(KEY, store);
+    addMessage({title: 'Colors', type: 'success', text: 'Color was added successfully'});
     getTitle(id, store.color);
     setStore(null);
     setRefresh(Date.now());
 
-  }, [store, getTitle]);
+  }, [store, getTitle, addMessage]);
 
   useEffect(_ => {
     if (null === destroy) {
       return;
     }
     storage.lsDelete(KEY, destroy.id);
+    addMessage({title: 'Colors', type: 'success', text: 'Color was deleted successfully'});
     setDestroy(null);
     setRefresh(Date.now());
-  }, [destroy]);
+  }, [destroy, addMessage]);
 
   useEffect(_ => {
     if (null === update) {
       return;
     }
     storage.lsEdit(KEY, update, update.id);
+    addMessage({title: 'Colors', type: 'success', text: 'Color was edited successfully'});
     getTitle(update.id, update.color);
     setUpdate(null);
     setRefresh(Date.now());
-  }, [update, getTitle]);
+  }, [update, getTitle, addMessage]);
 
 
   return (
@@ -92,10 +110,10 @@ export default function App() {
           </div>
         </div>
       </div>
-      { create !== null && <Create setCreate={setCreate} create={create} setStore={setStore} /> }
+      { create !== null && <Create setCreate={setCreate} create={create} setStore={setStore} addMessage={addMessage} /> }
       { remove !== null && <Delete setRemove={setRemove} remove={remove} setDestroy={setDestroy} /> }
       { edit !== null && <Edit setEdit={setEdit} edit={edit} setUpdate={setUpdate} /> }
-      <Messages msg={msg} />
+      <Messages msg={msg} remMessage={remMessage} />
     </>
   );
 }
