@@ -14,8 +14,10 @@ const write = (key, data) => {
 
 export const lsCreate = (key, data) => {
     const ls = read(key);
-    ls.push({...data, id: uuidv4()});
+    const id = uuidv4();
+    ls.push({...data, id});
     write(key, ls);
+    return id;
 }
 
 export const lsDelete = (key, id) => {

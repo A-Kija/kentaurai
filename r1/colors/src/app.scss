@@ -7,6 +7,28 @@
     background-color: #00000080;
 }
 
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 50px;
+}
+
+.toast-type {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    margin-right: 5px;
+    &.error {
+        background-color: $b2;
+    }
+    &.success {
+        background-color: $b5;
+    }
+    &.info {
+        background-color: $b4;
+    }
+}
+
 label.flex-space {
     display: flex;
     justify-content: space-between;
@@ -59,6 +81,9 @@ label.flex-space {
         display: flex;
         gap: 30px;
         align-items: center;
+        .title {
+            width: 150px;
+        }
         .colors {
             display: flex;
             gap: 10px;

@@ -4,7 +4,9 @@ import * as storage from './Functions/ls';
 import Create from './Components/Create';
 import Delete from './Components/Delete';
 import Edit from './Components/Edit';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
+import Messages from './Components/Messages';
 
 const dv = {
   shape: 'square',
@@ -25,6 +27,20 @@ export default function App() {
   const [edit, setEdit] = useState(null);
   const [update, setUpdate] = useState(null);
 
+  const [msg, setMsg] = useState([]);
+
+  const getTitle = useCallback((id, color) => {
+    axios.get('https://www.thecolorapi.com/id?hex=' + color.substring(1))
+    .then(res => {
+      const title = res.data.name.value;
+      storage.lsEdit(KEY, {title}, id);
+      setRefresh(Date.now());
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, []);
+
   useEffect(_ => {
     setColors(storage.lsRead(KEY));
   }, [refresh]);
@@ -33,10 +49,12 @@ export default function App() {
     if (null === store) {
       return;
     }
-    storage.lsCreate(KEY, store);
+    const id = storage.lsCreate(KEY, store);
+    getTitle(id, store.color);
     setStore(null);
     setRefresh(Date.now());
-  }, [store]);
+
+  }, [store, getTitle]);
 
   useEffect(_ => {
     if (null === destroy) {
@@ -52,9 +70,10 @@ export default function App() {
       return;
     }
     storage.lsEdit(KEY, update, update.id);
+    getTitle(update.id, update.color);
     setUpdate(null);
     setRefresh(Date.now());
-  }, [update]);
+  }, [update, getTitle]);
 
 
   return (
@@ -76,6 +95,7 @@ export default function App() {
       { create !== null && <Create setCreate={setCreate} create={create} setStore={setStore} /> }
       { remove !== null && <Delete setRemove={setRemove} remove={remove} setDestroy={setDestroy} /> }
       { edit !== null && <Edit setEdit={setEdit} edit={edit} setUpdate={setUpdate} /> }
+      <Messages msg={msg} />
     </>
   );
 }

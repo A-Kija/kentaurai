@@ -16,7 +16,7 @@ export default function List({ colors, setRemove, setEdit }) {
                 colors.map(c => <li key={c.id} className="list-group-item">
                     <div className="color-line">
                         <div className="content">
-                            <div>{c.id}</div>
+                            <div className="title">{c.title ?? 'no title'}</div>
                             <div className="colors">
                                 {
                                     Array(c.range).fill().map((_, i) => c.shape !== 'triangle'
