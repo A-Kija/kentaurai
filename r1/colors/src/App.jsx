@@ -19,6 +19,9 @@ const KEY = 'colors';
 
 export default function App() {
 
+
+  const [route, setRoute] = useState('landing');
+
   const [colors, setColors] = useState(null);
   const [refresh, setRefresh] = useState(Date.now());
   const [create, setCreate] = useState(null);
@@ -36,7 +39,7 @@ export default function App() {
 
   const addMessage = useCallback(m => {
     const id = uuidv4();
-    setMsg(msgs => [{...m, id}, ...msgs]);
+    setMsg(msgs => [{ ...m, id }, ...msgs]);
     setTimeout(_ => {
       remMessage(id);
     }, 5000);
@@ -44,15 +47,15 @@ export default function App() {
 
   const getTitle = useCallback((id, color) => {
     axios.get('https://www.thecolorapi.com/id?hex=' + color.substring(1))
-    .then(res => {
-      const title = res.data.name.value;
-      storage.lsEdit(KEY, {title}, id);
-      addMessage({title: 'API', type: 'info', text: 'Color name was successfully received'});
-      setRefresh(Date.now());
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => {
+        const title = res.data.name.value;
+        storage.lsEdit(KEY, { title }, id);
+        addMessage({ title: 'API', type: 'info', text: 'Color name was successfully received' });
+        setRefresh(Date.now());
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, [addMessage]);
 
 
@@ -65,7 +68,7 @@ export default function App() {
       return;
     }
     const id = storage.lsCreate(KEY, store);
-    addMessage({title: 'Colors', type: 'success', text: 'Color was added successfully'});
+    addMessage({ title: 'Colors', type: 'success', text: 'Color was added successfully' });
     getTitle(id, store.color);
     setStore(null);
     setRefresh(Date.now());
@@ -77,7 +80,7 @@ export default function App() {
       return;
     }
     storage.lsDelete(KEY, destroy.id);
-    addMessage({title: 'Colors', type: 'success', text: 'Color was deleted successfully'});
+    addMessage({ title: 'Colors', type: 'success', text: 'Color was deleted successfully' });
     setDestroy(null);
     setRefresh(Date.now());
   }, [destroy, addMessage]);
@@ -87,33 +90,48 @@ export default function App() {
       return;
     }
     storage.lsEdit(KEY, update, update.id);
-    addMessage({title: 'Colors', type: 'success', text: 'Color was edited successfully'});
+    addMessage({ title: 'Colors', type: 'success', text: 'Color was edited successfully' });
     getTitle(update.id, update.color);
     setUpdate(null);
     setRefresh(Date.now());
   }, [update, getTitle, addMessage]);
 
 
-  return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <div className="buttons">
-              <button type="button" className="blue" onClick={_ => setCreate(dv)}>Add new color</button>
+  if (route === 'landing') {
+    return (
+      <div className="landing">
+        <div className="bin">
+          <h1>Landing Page</h1>
+          <div class="link" onClick={_ => setRoute('colors')}>go to colors</div>
+        </div>
+      </div>
+    )
+  }
+
+
+  if (route === 'colors') {
+    return (
+      <>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <div className="buttons">
+                <button type="button" className="blue" onClick={_ => setCreate(dv)}>Add new color</button>
+                <button type="button" className="white" onClick={_ => setRoute('landing')}>go to Landing</button>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <List colors={colors} setRemove={setRemove} setEdit={setEdit} />
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col">
-            <List colors={colors} setRemove={setRemove} setEdit={setEdit} />
-          </div>
-        </div>
-      </div>
-      { create !== null && <Create setCreate={setCreate} create={create} setStore={setStore} addMessage={addMessage} /> }
-      { remove !== null && <Delete setRemove={setRemove} remove={remove} setDestroy={setDestroy} /> }
-      { edit !== null && <Edit setEdit={setEdit} edit={edit} setUpdate={setUpdate} /> }
-      <Messages msg={msg} remMessage={remMessage} />
-    </>
-  );
+        {create !== null && <Create setCreate={setCreate} create={create} setStore={setStore} addMessage={addMessage} />}
+        {remove !== null && <Delete setRemove={setRemove} remove={remove} setDestroy={setDestroy} />}
+        {edit !== null && <Edit setEdit={setEdit} edit={edit} setUpdate={setUpdate} />}
+        <Messages msg={msg} remMessage={remMessage} />
+      </>
+    );
+  }
 }
