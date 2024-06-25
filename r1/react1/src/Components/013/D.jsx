@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { ColorContext } from "../../App"
+import { ColorContext } from "../../013"
 
 export default function D({nr}) {
 
