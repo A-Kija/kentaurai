@@ -1,35 +1,20 @@
 import './App.css';
-import Button1 from './Components/014/Button1';
-import Button2 from './Components/014/Button2';
-import Counter from './Components/014/Counter';
-import Buttons from './Components/014/Buttons';
 import './buttons.scss';
-import Figure from './Components/014/Figure';
-import './Styles/figures.scss';
+import { useState } from 'react';
 
 function App() {
+
+    const [count1, setCount1] = useState(0)
 
 
     return (
         <div className="App">
             <header className="App-header">
-                <h1>CONTEXT II</h1>
+                <h1>State: {count1} Reducer: 0 </h1>
                 <div className="buttons">
-                    <Counter>
-                        <Button1 />
-                        <Button2 />
-                        <Buttons.Blue />
-                        <Buttons.Yellow />
-                    </Counter>
+                    <button type="button" className="blue" onClick={_ => setCount1(c => c + 1)}>add 1 (with state)</button>
+                    <button type="button" className="red">add 1 (with reducer)</button>
                 </div>
-                <Figure color="crimson">
-                    <div className="square"></div>
-                </Figure>
-
-                <Figure color="skyblue">
-                    <div className="circle"></div>
-                </Figure>
-
             </header>
         </div>
     );

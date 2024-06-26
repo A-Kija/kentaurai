@@ -1,10 +1,12 @@
-export default function Figure({children, color}) {
+const WithColor = Component => color => <Component color={color} />
 
+export default function Figure({children, color}) {
 
     return (
         <>
-            {children}
+            {
+               WithColor(children.type)({color}) 
+            }
         </>
     );
-
 }
