@@ -1,4 +1,5 @@
 import Create from './Components/Create';
+import CreateButton from './Components/CreateButton';
 import { Data } from './Contexts/DataContext';
 import './app.scss';
 
@@ -8,9 +9,7 @@ export default function App() {
       <div className="container">
         <div className="row">
           <div className="col">
-            <div className="buttons">
-              <button type="button" className="blue">Add new color</button>
-            </div>
+            <CreateButton />
           </div>
         </div>
         <div className="row">

@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { rbc, rbu } from '../Styles/svg';
+import { DataContext } from '../Contexts/DataContext';
 
-export default function Create({create, setStore, setCreate, addMessage}) {
+export default function Create() {
 
+    const { create, setStore, setCreate, dv } = useContext(DataContext);
 
-    const [shape, setShape] = useState(create.shape);
-    const [color, setColor] = useState(create.color);
-    const [range, setRange] = useState(create.range);
+    const [shape, setShape] = useState(dv.shape);
+    const [color, setColor] = useState(dv.color);
+    const [range, setRange] = useState(dv.range);
     const [errors, setErrors] = useState([]);
+
+    useEffect(_ => {
+        if (null === create) {
+            return;
+        }
+        setShape(create.shape);
+        setColor(create.color);
+        setRange(create.range);
+    }, [create]);
 
     const handleShape = e => {
         setShape(e.target.id);
@@ -17,12 +28,12 @@ export default function Create({create, setStore, setCreate, addMessage}) {
         setErrors([]);
         let hasError = false;
         if (!shape) {
-            addMessage({title: 'Error', type: 'error', text: 'Please select color shape'});
+            // addMessage({title: 'Error', type: 'error', text: 'Please select color shape'});
             hasError = true;
             setErrors(e => [...e, 'shape']);
         }
         if (range > 8) {
-            addMessage({title: 'Error', type: 'error', text: 'Max range is 8'});
+            // addMessage({title: 'Error', type: 'error', text: 'Max range is 8'});
             hasError = true;
             setErrors(e => [...e, 'range']);
         }
@@ -35,6 +46,10 @@ export default function Create({create, setStore, setCreate, addMessage}) {
             range
         });
         setCreate(null);
+    }
+
+    if (null === create) {
+        return null;
     }
 
     return (
