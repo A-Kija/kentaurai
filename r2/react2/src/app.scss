@@ -1,0 +1,164 @@
+@import 'bootstrap/scss/bootstrap';
+@import './Styles/buttons.scss';
+
+
+.modal {
+    display: block;
+    background-color: #00000080;
+}
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 50px;
+}
+
+.toast-type {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    margin-right: 5px;
+    &.error {
+        background-color: $b2;
+    }
+    &.success {
+        background-color: $b5;
+    }
+    &.info {
+        background-color: $b4;
+    }
+}
+
+label.flex-space {
+    display: flex;
+    justify-content: space-between;
+}
+
+label.error {
+    color: $b2;
+}
+
+
+.cb-bin {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    svg {
+        fill: black;
+        width: 22px;
+        height: 22px;
+    }
+
+    label {
+        height: 22px;
+        cursor: pointer;
+    }
+
+    .cb {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+        height: 22px;
+        padding: 3px 0;
+
+        span {
+            line-height: 22px;
+            font-size: 22px;
+            padding-right: 10px;
+            user-select: none;
+        }
+    }
+}
+
+
+.color-line {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    .content {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        .title {
+            width: 150px;
+        }
+        .colors {
+            display: flex;
+            gap: 10px;
+
+            .square {
+                width: 50px;
+                height: 50px;
+                &.small {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .circle {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                &.small {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .rounded {
+                width: 50px;
+                height: 50px;
+                border-radius: 15px;
+                &.small {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .triangle {
+                width: 0;
+                height: 0;
+                border-left: 30px solid transparent;
+                border-right: 30px solid transparent;
+                border-bottom: 40px solid transparent;
+                &.small {
+                    border-left: 15px solid transparent;
+                    border-right: 15px solid transparent;
+                    border-bottom: 20px solid transparent;
+                }
+            }
+        }
+    }
+    .buttons {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.landing {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1 {
+        font-size: 50px;
+        letter-spacing: 5px;
+        color: skyblue;
+    }
+    .link {
+        cursor: pointer;
+        padding: 2px 5px;
+        transition: all 0.3s;
+        display: inline-block;
+        &:hover {
+            color: skyblue;
+        }
+    }
+}

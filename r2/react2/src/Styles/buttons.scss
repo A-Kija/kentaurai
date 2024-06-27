@@ -1,0 +1,62 @@
+$b1: #2191FB;
+$b2: #BA274A;
+$b3: #F9C846;
+$b4: #B2ECE1;
+$b5: #04724D;
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 5px 25px;
+    min-width: 60px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: lighter;
+    transition: all 0.25s;
+    border: none;
+    &.blue {
+        background-color: $b1;
+        color: black;
+        &:hover {
+            background-color: darken($b1, 15%);
+        }
+    }
+    &.red {
+        background-color: $b2;
+        color: white;
+        &:hover {
+            background-color: darken($b2, 10%);
+        }
+    }
+    &.yellow {
+        background-color: $b3;
+        color: black;
+        &:hover {
+            background-color: darken($b3, 20%);
+        }
+    }
+    &.white {
+        background-color: white;
+        color: black;
+        &:hover {
+            background-color: $b4;
+        }
+    }
+    &.green {
+        background-color: $b5;
+        color: white;
+        &:hover {
+            background-color: darken($b5, 7%);
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    margin: 20px;
+    padding: 20px;
+}
