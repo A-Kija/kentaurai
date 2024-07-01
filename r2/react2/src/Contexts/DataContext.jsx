@@ -15,8 +15,9 @@ const serverUrl = 'http://localhost:3001/';
 
 export const Data = ({children}) => {
 
-    const { colors } = useRead(serverUrl);
-    const { create, setCreate, setStore } = useCreate(serverUrl);
+    const { colors, dispachColors } = useRead(serverUrl);
+
+    const { create, setCreate, setStore } = useCreate(serverUrl, dispachColors);
 
 
     return (

@@ -31,10 +31,13 @@ export default function List() {
                                 }
                             </div>
                         </div>
-                        <div className="buttons">
-                            <button type="button" className="green" >Edit</button>
-                            <button type="button" className="red" >Delete</button>
-                        </div>
+                        {
+                            c.id !== 0 &&
+                            <div className="buttons">
+                                <button type="button" className="green" >Edit</button>
+                                <button type="button" className="red" >Delete</button>
+                            </div>
+                        }
                     </div>
                 </li>)
             }

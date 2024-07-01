@@ -17,13 +17,12 @@ const useRead = serverUrl => {
         .catch(error => {
             console.log(error);
         });
-        // setStore(null);
       }, []);
 
 
 
 
-    return { colors }
+    return { colors, dispachColors }
 
 }
 

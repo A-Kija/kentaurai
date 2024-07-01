@@ -27,12 +27,13 @@ app.get('/', (_, res) => {
 });
 
 app.get('/colors', (req, res) => {
-    
+
     const sql = `
         SELECT *
         FROM colors
+        ORDER BY id DESC
     `;
-    
+
 
     connection.query(sql, (err, rows) => {
         if (err) throw err;
@@ -57,9 +58,11 @@ app.post('/colors', (req, res) => {
     INSERT INTO colors (color, amount, shape)
     VALUES ( ?, ?, ? )
 `;
-    connection.query(sql, [color, range, shape], err => {
+    connection.query(sql, [color, range, shape], (err, result) => {
         if (err) throw err;
-        res.send('OK');
+        setTimeout(_ => {
+                res.json({ success: true, id: result.insertId });
+        }, 2000);
     });
 });
 
