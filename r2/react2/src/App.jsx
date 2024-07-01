@@ -1,5 +1,6 @@
-import Create from './Components/Create';
 import CreateButton from './Components/CreateButton';
+import List from './Components/List';
+import Modals from './Components/Modals';
 import { Data } from './Contexts/DataContext';
 import './app.scss';
 
@@ -14,11 +15,11 @@ export default function App() {
         </div>
         <div className="row">
           <div className="col">
-            LIST
+            <List />
           </div>
         </div>
       </div>
-      <Create />
+      <Modals />
     </Data>
   );
 }

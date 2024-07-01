@@ -1,24 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { rbc, rbu } from '../Styles/svg';
 import { DataContext } from '../Contexts/DataContext';
 
 export default function Create() {
 
-    const { create, setStore, setCreate, dv } = useContext(DataContext);
+    const { create, setStore, setCreate } = useContext(DataContext);
 
-    const [shape, setShape] = useState(dv.shape);
-    const [color, setColor] = useState(dv.color);
-    const [range, setRange] = useState(dv.range);
+    const [shape, setShape] = useState(create.shape);
+    const [color, setColor] = useState(create.color);
+    const [range, setRange] = useState(create.range);
     const [errors, setErrors] = useState([]);
-
-    useEffect(_ => {
-        if (null === create) {
-            return;
-        }
-        setShape(create.shape);
-        setColor(create.color);
-        setRange(create.range);
-    }, [create]);
 
     const handleShape = e => {
         setShape(e.target.id);
@@ -48,9 +39,6 @@ export default function Create() {
         setCreate(null);
     }
 
-    if (null === create) {
-        return null;
-    }
 
     return (
         <div className="modal">

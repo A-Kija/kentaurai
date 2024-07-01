@@ -26,6 +26,23 @@ app.get('/', (_, res) => {
     res.send('Colors Server');
 });
 
+app.get('/colors', (req, res) => {
+    
+    const sql = `
+        SELECT *
+        FROM colors
+    `;
+    
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw err;
+        res.json(rows);
+    });
+});
+
+
+
+
 app.post('/colors', (req, res) => {
 
     let { color, range, shape } = req.body;
