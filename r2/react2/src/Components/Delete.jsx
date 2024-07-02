@@ -1,4 +1,10 @@
-export default function Delete({ setRemove, remove, setDestroy }) {
+import { useContext } from 'react';
+import { DataContext } from '../Contexts/DataContext';
+
+export default function Delete() {
+
+const { setRemove, remove, setDestroy } = useContext(DataContext);
+
 
     const handleDelete = _ => {
         setDestroy({...remove});

@@ -61,10 +61,35 @@ app.post('/colors', (req, res) => {
     connection.query(sql, [color, range, shape], (err, result) => {
         if (err) throw err;
         setTimeout(_ => {
-                res.json({ success: true, id: result.insertId });
+            res.json({
+                success: true,
+                id: result.insertId,
+                msg: { title: 'Colors', type: 'success', text: 'Color was added successfully' }
+            });
         }, 2000);
     });
 });
+
+app.delete('/colors/:id', (req, res) => {
+
+    const id = req.params.id;
+
+    const sql = `
+    DELETE FROM colors
+    WHERE id = ?
+`;
+    connection.query(sql, [id], err => {
+        if (err) throw err;
+        setTimeout(_ => {
+            res.json({
+                success: true,
+                msg: { title: 'Colors', type: 'success', text: 'Color was deleted successfully' }
+            });
+        }, 2000);
+    });
+
+});
+
 
 
 app.listen(port, _ => {

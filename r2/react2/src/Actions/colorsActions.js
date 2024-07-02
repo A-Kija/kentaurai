@@ -26,3 +26,16 @@ export const remove0Id = _ => {
         type: c.REMOVE_COLOR_ID_0
     }
 }
+
+export const hideId = id => {
+    return {
+        type: c.HIDE_COLOR_ID,
+        payload: id
+    }
+}
+
+export const removeHidden = _ => {
+    return {
+        type: c.REMOVE_HIDDEN
+    }
+}

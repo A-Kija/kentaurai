@@ -1,4 +1,9 @@
-export default function Messages({ msg, remMessage }) {
+import { useContext } from 'react';
+import { DataContext } from '../Contexts/DataContext';
+
+export default function Messages() {
+
+    const { msg, remMessage } = useContext(DataContext);
 
     if (msg.length === 0) {
         return null;

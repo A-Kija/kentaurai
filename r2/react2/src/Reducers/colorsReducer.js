@@ -28,6 +28,9 @@ const colorsReducer = (state, action) => {
             s = s.filter(c => c.id !== 0);
             break;
 
+        case c.HIDE_COLOR_ID:
+            s = s.map(c => c.id === action.payload ? {...c, hide: true} : c);
+
         default:
 
 
