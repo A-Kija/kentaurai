@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { rbc, rbu } from '../Styles/svg';
+import { DataContext } from '../Contexts/DataContext';
 
-export default function Edit({edit, setUpdate, setEdit}) {
+export default function Edit() {
+
+    const {edit, setUpdate, setEdit} = useContext(DataContext);
 
 
     const [shape, setShape] = useState(edit.shape);

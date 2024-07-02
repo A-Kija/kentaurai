@@ -39,3 +39,28 @@ export const removeHidden = _ => {
         type: c.REMOVE_HIDDEN
     }
 }
+
+export const showHidden = _ => {
+    return {
+        type: c.SHOW_HIDDEN
+    }
+}
+
+export const editColor = color => {
+    return {
+        type: c.EDIT_COLOR,
+        payload: color
+    }
+}
+
+export const removeOld = _ => {
+    return {
+        type: c.REMOVE_OLD
+    }
+}
+
+export const restoreOld = _ => {
+    return {
+        type: c.RESTORE_OLD
+    }
+}

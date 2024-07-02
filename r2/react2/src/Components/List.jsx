@@ -3,7 +3,7 @@ import { DataContext } from '../Contexts/DataContext';
 
 export default function List() {
 
-    const { colors, setRemove } = useContext(DataContext);
+    const { colors, setRemove, setEdit } = useContext(DataContext);
 
     if (null === colors) {
         return (
@@ -36,9 +36,9 @@ export default function List() {
                                 </div>
                             </div>
                             {
-                                c.id !== 0 &&
+                                c.id !== 0 && !c.old &&
                                 <div className="buttons">
-                                    <button type="button" className="green" >Edit</button>
+                                    <button type="button" className="green" onClick={_ => setEdit(c)} >Edit</button>
                                     <button type="button" className="red" onClick={_ => setRemove(c)} >Delete</button>
                                 </div>
                             }

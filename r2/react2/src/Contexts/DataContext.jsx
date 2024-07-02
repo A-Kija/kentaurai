@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useCreate from '../Hooks/useCreate';
 import useRead from '../Hooks/useRead';
 import useDelete from '../Hooks/useDelete';
+import useEdit from '../Hooks/useEdit';
 
 export const DataContext = createContext();
 
@@ -37,6 +38,8 @@ export const Data = ({children}) => {
 
     const { remove, setRemove, setDestroy } = useDelete(serverUrl, dispachColors, addMessage);
 
+    const { edit, setEdit, setUpdate } = useEdit(serverUrl, dispachColors, addMessage);
+
 
 
 
@@ -45,6 +48,7 @@ export const Data = ({children}) => {
             remMessage, addMessage, msg,
             create, setCreate, setStore,
             remove, setRemove, setDestroy,
+            edit, setEdit, setUpdate,
             dv,
             colors
         }}>

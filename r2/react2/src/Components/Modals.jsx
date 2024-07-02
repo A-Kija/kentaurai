@@ -2,10 +2,11 @@ import { useContext } from 'react';
 import { DataContext } from '../Contexts/DataContext';
 import Create from './Create';
 import Delete from './Delete';
+import Edit from './Edit';
 
 export default function Modals() {
 
-const { create, remove } = useContext(DataContext);
+const { create, remove, edit } = useContext(DataContext);
 
 
     if (create) {
@@ -14,6 +15,10 @@ const { create, remove } = useContext(DataContext);
 
     if (remove) {
         return <Delete />
+    }
+
+    if (edit) {
+        return <Edit />
     }
 
 
