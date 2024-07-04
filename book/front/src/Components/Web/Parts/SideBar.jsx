@@ -1,10 +1,19 @@
-import Footer from "./Footer";
-import Menu from "./Menu";
+import { useRef, useState } from 'react';
+import Footer from './Footer';
+import Menu from './Menu';
 
 export default function SideBar() {
 
+    const sidebar = useRef();
+
+    const [showSidebar, setShowSidebar] = useState(true);
+
+    const toogleSideBar = _ => {
+        setShowSidebar(b => !b);
+    }
+
     return (
-        <div id="sidebar">
+        <div id="sidebar" ref={sidebar} className={showSidebar ? null : 'inactive'}>
             <div className="inner">
 
                 {/* <!-- Search --> */}
@@ -59,6 +68,7 @@ export default function SideBar() {
                 <Footer />
 
             </div>
+            <a className="toggle" style={{cursor: 'pointer'}} onClick={toogleSideBar}>Toggle</a>
         </div>
     );
 }

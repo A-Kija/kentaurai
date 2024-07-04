@@ -3,6 +3,7 @@ import Page404 from '../Components/Common/Page404';
 import Home from '../Components/Web/Home';
 import Web from '../Components/Web/Parts/Layout';
 import Register from '../Components/Common/Register';
+import Login from '../Components/Common/Login';
 
 
 const RouterContext = createContext([]);
@@ -63,6 +64,7 @@ const Router = _ => {
         { path: '#bebras', pc: 0, component: <Web><Bebras /></Web> },
         { path: '#zebras', pc: 0, component: <Web><Zebras /></Web> },
         { path: '#register', pc: 0, component: <Register/> },
+        { path: '#login', pc: 0, component: <Login/> },
     ];
 
     const routeComponent = routes.find(r => r.path === route && r.pc === params.length)?.component ?? <Page404/>
