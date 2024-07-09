@@ -4,13 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 export const MessagesContext = createContext();
 
 
-export const Messages = ({children}) => {
+export const Messages = ({ children }) => {
 
 
-    const [msg, setMsg] = useState([
-        {id: 1, type: 'success', title: 'Hello', text: 'Bla bla bla, ku ku ku'},
-        {id: 2, type: 'error', title: 'Bad', text: 'Bla bla bla, ku ku ku'}
-    ]);
+    const [msg, setMsg] = useState([]);
 
     const remMessage = useCallback(id => {
         setMsg(msgs => msgs.filter(m => m.id !== id));
@@ -24,10 +21,17 @@ export const Messages = ({children}) => {
         }, 5000);
     }, [remMessage]);
 
+    const messageError = useCallback(error => {
+        if (!error.response) {
+            addMessage({ type: 'error', title: 'Server error', text: error.message })
+        }
+
+    }, []);
+
 
     return (
         <MessagesContext.Provider value={{
-            remMessage, addMessage, msg
+            remMessage, addMessage, msg, messageError
         }}>
             {children}
         </MessagesContext.Provider>
