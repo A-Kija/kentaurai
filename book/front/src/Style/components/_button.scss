@@ -63,6 +63,19 @@
 			line-height: 3.65em;
 		}
 
+		&.simple {
+			box-shadow: none;
+			width: 30px;
+			height: 30px;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			span {
+				font-size: 24px;
+			}
+		}
+
 		&.primary {
 			background-color: _palette(accent);
 			box-shadow: none;

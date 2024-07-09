@@ -1,27 +1,17 @@
 import Header from './Header';
 import SideBar from './SideBar';
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
 
-return (
-			<div id="wrapper">
-
-				{/* <!-- Main --> */}
-					<div id="main">
-						<div className="inner">
-
-							{/* <!-- Header --> */}
-                                <Header />
-
-							{children}
-								
-
-						</div>
-					</div>
-
-				{/* <!-- Sidebar --> */}
-					<SideBar />
-
+	return (
+		<div id="wrapper">
+			<div id="main">
+				<div className="inner">
+					<Header />
+					{children}
+				</div>
 			</div>
-);
+			<SideBar />
+		</div>
+	);
 }
