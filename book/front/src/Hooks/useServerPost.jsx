@@ -24,14 +24,14 @@ const useServerPost = url => {
                 messageError(error);
                 setResponse({
                     type: 'error',
-                    data: error
+                    serverData: error
                 });
             });
 
     }
 
 
-    return { doAction, response };
+    return { doAction, serverResponse: response };
 
 }
 
