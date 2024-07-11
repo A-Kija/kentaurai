@@ -7,13 +7,13 @@ const useServerPost = url => {
 
     const [response, setResponse] = useState(null);
 
-    const { messageError } = useContext(MessagesContext);
+    const { messageError, messageSuccess } = useContext(MessagesContext);
 
     const doAction = data => {
 
         axios.post(`${SERVER_URL}${url}`, data)
             .then(res => {
-
+                messageSuccess(res);
                 setResponse({
                     type: 'success',
                     data: res.data

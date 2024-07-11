@@ -2,9 +2,12 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 import Page404 from '../Components/Common/Page404';
 import Home from '../Components/Web/Home';
 import Web from '../Components/Web/Parts/Layout';
+import Admin from '../Components/Admin/Parts/Layout';
 import Register from '../Components/Common/Register';
 import Login from '../Components/Common/Login';
 import * as l from '../Constants/urls';
+import Dashbord from '../Components/Admin/Dashbord';
+import UsersList from '../Components/Admin/UsersList';
 
 
 const RouterContext = createContext([]);
@@ -64,6 +67,10 @@ const Router = _ => {
         { path: l.SITE_HOME, pc: 0, component: <Web><Home /></Web> },
         { path: '#bebras', pc: 0, component: <Web><Bebras /></Web> },
         { path: '#zebras', pc: 0, component: <Web><Zebras /></Web> },
+
+        { path: l.SITE_DASHBORD, pc: 0, component: <Admin><Dashbord /></Admin> },
+        { path: l.USERS_LIST, pc: 0, component: <Admin><UsersList /></Admin> },
+
         { path: l.SITE_REGISTER, pc: 0, component: <Register/> },
         { path: l.SITE_LOGIN, pc: 0, component: <Login/> },
     ];

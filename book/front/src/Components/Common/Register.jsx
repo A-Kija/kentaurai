@@ -27,7 +27,6 @@ export default function Register() {
             if (serverResponse.serverData?.response?.data?.errorsBag) {
                 setServerErrors(serverResponse.serverData.response.data.errorsBag);
             }
-            
         }
 
 

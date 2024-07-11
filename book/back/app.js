@@ -42,11 +42,7 @@ app.post('/register', (req, res) => {
         return;
     }
 
-    const sql = `
-    SELECT email
-    FROM users
-    WHERE email = ?
-    `;
+    const sql = `SELECT email FROM users WHERE email = ? `;
 
     connection.query(sql, [email], (err, rows) => {
         if (err) throw err;
@@ -64,11 +60,14 @@ app.post('/register', (req, res) => {
             `;
             connection.query(sql, [name, email, md5(password)], (err) => {
                 if (err) throw err;
-                res.status(422).json({
-                    message: 'Viskas blogai'
-                }).end
+                res.status(201).json({
+                    message: {
+                        type: 'success',
+                        title: 'Sveiki!',
+                        text: `Malonu, kad prie mūsų prisijungėte, ${name}`
+                    }
+                }).end();
             });
-
         }
     });
 });
