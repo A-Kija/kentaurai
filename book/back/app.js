@@ -27,6 +27,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
+app.get('/admin/users', (_, res) => {
+
+    const sql = `
+        SELECT *
+        FROM users`;
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw err;
+        res.json({
+            users: rows
+        }).end();
+    });
+});
+
+
+
+
+
 
 app.post('/register', (req, res) => {
 

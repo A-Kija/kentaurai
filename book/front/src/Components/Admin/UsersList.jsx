@@ -1,12 +1,24 @@
 import useServerGet from '../../Hooks/useServerGet';
 import * as l from '../../Constants/urls';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function UsersList() {
 
     const { doAction, serverResponse } = useServerGet(l.SERVER_GET_USERS);
 
     const [users, setUsers] = useState(null);
+
+    useEffect(_ => {
+        doAction();
+    }, [doAction]);
+
+    useEffect(_ => {
+        if (null === serverResponse) {
+            return;
+        }
+        console.log(serverResponse)
+        setUsers(serverResponse.serverData.users ?? null)
+    }, [serverResponse]);
 
 
     return (
@@ -20,7 +32,7 @@ export default function UsersList() {
             </section>
             <section>
                 {
-                    users === null && <h2>Palaukite, siunčiame vartotojų sąrašą</h2>
+                    users === null && <h2>Palaukite, siunčiamas vartotojų sąrašą</h2>
                 }
                 {
                     users !== null && <div className="table-wrapper">
@@ -29,25 +41,31 @@ export default function UsersList() {
                                 <tr>
                                     <th>Vardas</th>
                                     <th>Elektroninis paštas</th>
+                                    <th>Rolė</th>
                                     <th>Veiksmai</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Item1</td>
-                                    <td>Ante turpis integer aliquet porttitor.</td>
-                                    <td className="two">
-                                        <ul className="actions special">
-                                            <li><input type="button" value="redaguoti" className="small" /></li>
-                                            <li><input type="button" value="ištrinti" className="small" /></li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                {
+                                    users.map(u =>
+                                        <tr key={u.id}>
+                                            <td>{u.name}</td>
+                                            <td>{u.email}</td>
+                                            <td>{u.role}</td>
+                                            <td className="two">
+                                                <ul className="actions special">
+                                                    <li><input type="button" value="redaguoti" className="small" /></li>
+                                                    <li><input type="button" value="ištrinti" className="small" /></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        )
+                                }
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colSpan="2"></td>
-                                    <td>Viso vartototojų: 5</td>
+                                    <td>Viso vartototojų: {users.length}</td>
                                 </tr>
                             </tfoot>
                         </table>

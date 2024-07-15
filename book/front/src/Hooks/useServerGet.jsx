@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SERVER_URL } from '../Constants/urls';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { MessagesContext } from '../Contexts/Messages';
 
 const useServerGet = url => {
@@ -9,14 +9,14 @@ const useServerGet = url => {
 
     const { messageError, messageSuccess } = useContext(MessagesContext);
 
-    const doAction = _ => {
+    const doAction = useCallback(_ => {
 
-        axios.post(`${SERVER_URL}${url}`)
+        axios.get(`${SERVER_URL}${url}`)
             .then(res => {
                 messageSuccess(res);
                 setResponse({
                     type: 'success',
-                    data: res.data
+                    serverData: res.data
                 });
             })
             .catch(error => {
@@ -27,7 +27,7 @@ const useServerGet = url => {
                     serverData: error
                 });
             });
-    }
+    }, [messageError, messageSuccess, url]);
 
     return { doAction, serverResponse: response };
 
