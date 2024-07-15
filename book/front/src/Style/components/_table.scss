@@ -60,6 +60,10 @@
 						&:first-child {
 							border-left-width: 1px;
 						}
+
+						&.two {
+							width: 260px;
+						}
 					}
 
 					&:first-child {

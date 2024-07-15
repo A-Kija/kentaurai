@@ -68,14 +68,27 @@ const Router = _ => {
         { path: '#bebras', pc: 0, component: <Web><Bebras /></Web> },
         { path: '#zebras', pc: 0, component: <Web><Zebras /></Web> },
 
-        { path: l.SITE_DASHBORD, pc: 0, component: <Admin><Dashbord /></Admin> },
-        { path: l.USERS_LIST, pc: 0, component: <Admin><UsersList /></Admin> },
+        { path: l.SITE_DASHBORD, pc: 1, p1: 'dashbord', component: <Admin><Dashbord /></Admin> },
+        { path: l.USERS_LIST, pc: 1, p1: 'users', component: <Admin><UsersList /></Admin> },
 
         { path: l.SITE_REGISTER, pc: 0, component: <Register/> },
         { path: l.SITE_LOGIN, pc: 0, component: <Login/> },
     ];
 
-    const routeComponent = routes.find(r => r.path === route && r.pc === params.length)?.component ?? <Page404/>
+    const findRoute = _ => {
+        return routes.find(r => {
+            const realPath = r.path.split('/');
+            if (realPath.length === 1) {
+                return realPath[0] === route && r.pc === params.length;
+            }
+            if (realPath.length === 2) {
+                return realPath[0] === route && r.pc === params.length && r.p1 === params[0];
+            }
+            return false;
+        });
+    }
+
+    const routeComponent = findRoute()?.component ?? <Page404/>
 
     return (
         <RouterContext.Provider value={params}>

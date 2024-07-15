@@ -4,9 +4,9 @@ export default function Header() {
 
     return (
         <header id="header">
-        <a href="index.html" className="logo"><strong>Admin</strong></a>
+        <a href="index.html" className="logo"><strong>Administravimas</strong></a>
         <ul className="icons">
-            <li><a href={l.SITE_LOGIN}><span className="label">Logout</span></a></li>
+            <li><a href={l.SITE_LOGIN}><span className="label">Atsijungti</span></a></li>
             
            
         </ul>
