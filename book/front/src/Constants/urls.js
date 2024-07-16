@@ -19,3 +19,4 @@ export const USERS_LIST = '#admin/users';
 // Server URLs
 export const SERVER_REGISTER = 'register';
 export const SERVER_GET_USERS = 'admin/users';
+export const SERVER_DELETE_USER = 'admin/delete/user';

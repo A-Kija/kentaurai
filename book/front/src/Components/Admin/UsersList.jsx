@@ -1,24 +1,40 @@
+import { useEffect, useState, useContext } from 'react';
 import useServerGet from '../../Hooks/useServerGet';
+import useServerDelete from '../../Hooks/useServerDelete';
+import { ModalsContext } from '../../Contexts/Modals';
 import * as l from '../../Constants/urls';
-import { useEffect, useState } from 'react';
+
 
 export default function UsersList() {
 
-    const { doAction, serverResponse } = useServerGet(l.SERVER_GET_USERS);
-
+    const { doAction: doGet, serverResponse: serverGetResponse } = useServerGet(l.SERVER_GET_USERS);
+    const { doAction: doDelete, serverResponse: serverDeleteResponse } = useServerDelete(l.SERVER_DELETE_USER);
+    const { setDeleteModal } = useContext(ModalsContext);
     const [users, setUsers] = useState(null);
 
-    useEffect(_ => {
-        doAction();
-    }, [doAction]);
+    const hideUser = user => {
+        setUsers(u => u.map(u => u.id === user.id ? { ...u, hidden: true } : u));
+    }
 
     useEffect(_ => {
-        if (null === serverResponse) {
+        doGet();
+    }, [doGet]);
+
+    useEffect(_ => {
+        if (null === serverGetResponse) {
             return;
         }
-        console.log(serverResponse)
-        setUsers(serverResponse.serverData.users ?? null)
-    }, [serverResponse]);
+        setUsers(serverGetResponse.serverData.users ?? null);
+    }, [serverGetResponse]);
+
+    useEffect(_ => {
+        if (null === serverDeleteResponse) {
+            return;
+        }
+
+        console.log(serverDeleteResponse)
+        // setUsers(serverDeleteResponse.serverData.users ?? null)
+    }, [serverDeleteResponse]);
 
 
     return (
@@ -48,24 +64,34 @@ export default function UsersList() {
                             <tbody>
                                 {
                                     users.map(u =>
-                                        <tr key={u.id}>
-                                            <td>{u.name}</td>
-                                            <td>{u.email}</td>
-                                            <td>{u.role}</td>
-                                            <td className="two">
-                                                <ul className="actions special">
-                                                    <li><input type="button" value="redaguoti" className="small" /></li>
-                                                    <li><input type="button" value="ištrinti" className="small" /></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        )
+                                        u.hidden
+                                            ? null
+                                            : <tr key={u.id}>
+                                                <td>{u.name}</td>
+                                                <td>{u.email}</td>
+                                                <td>{u.role}</td>
+                                                <td className="two">
+                                                    <ul className="actions special">
+                                                        <li><input type="button" value="redaguoti" className="small" /></li>
+                                                        <li><input onClick={_ => setDeleteModal({
+                                                            data: u,
+                                                            doDelete,
+                                                            hideData: hideUser,
+                                                        })}
+                                                            type="button"
+                                                            value="ištrinti"
+                                                            className="small" />
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                    )
                                 }
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colSpan="2"></td>
-                                    <td>Viso vartototojų: {users.length}</td>
+                                    <td>Viso vartototojų: {users.filter(u => !u.hidden).length}</td>
                                 </tr>
                             </tfoot>
                         </table>

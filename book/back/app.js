@@ -41,6 +41,29 @@ app.get('/admin/users', (_, res) => {
     });
 });
 
+app.delete('/admin/delete/user/:id', (req, res) => {
+
+    const { id } = req.params;
+
+    const sql = `
+        DELETE 
+        FROM users 
+        WHERE id = ? AND role != 'admin'
+        `;
+
+    connection.query(sql, [id], (err, result) => {
+        if (err) throw err;
+        const deleted = result.affectedRows;
+        res.json({
+            message: {
+                type: 'success',
+                title: 'Vartotojai',
+                text: `Vartotojas sėkmingai ištrintas`
+            }
+        }).end();
+    });
+});
+
 
 
 

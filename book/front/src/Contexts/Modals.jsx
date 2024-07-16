@@ -1,20 +1,16 @@
-import { createContext, useCallback, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { createContext, useState } from 'react';
 
 export const ModalsContext = createContext();
 
-
 export const Modals = ({ children }) => {
-
 
     const [deleteModal, setDeleteModal] = useState(null);
 
-
     return (
         <ModalsContext.Provider value={{
-            deleteModal
+            deleteModal, setDeleteModal
         }}>
             {children}
         </ModalsContext.Provider>
-    )
+    );
 }
