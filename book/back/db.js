@@ -52,7 +52,7 @@ const seedUsersTable = _ => {
     `;
     connection.query(sql, function (err) {
         if (err) throw err;
-        console.log('Users table dropped');
+        console.log('Users table seeded');
     });
 }
 

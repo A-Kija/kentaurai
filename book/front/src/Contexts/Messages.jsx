@@ -24,8 +24,10 @@ export const Messages = ({ children }) => {
     const messageError = useCallback(error => {
         if (!error.response) {
             addMessage({ type: 'error', title: 'Server error', text: error.message });
+        } else if (!error.response.data.message?.title) {
+            addMessage({ type: 'error', title: 'Server error ' + error.response.status, text: error.response.data.message });
         } else {
-            addMessage({ type: 'error', title: 'Server error ' + error.response.status , text: error.response.data.message });
+            addMessage({ type: error.response.data.message.type, title: error.response.data.message.title, text: error.response.data.message.text });
         }
     }, [addMessage]);
 

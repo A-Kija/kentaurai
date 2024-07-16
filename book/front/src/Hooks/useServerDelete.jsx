@@ -20,7 +20,6 @@ const useServerDelete = url => {
                 });
             })
             .catch(error => {
-                console.log(error);
                 messageError(error);
                 setResponse({
                     type: 'error',

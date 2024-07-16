@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import useServerGet from '../../Hooks/useServerGet';
 import useServerDelete from '../../Hooks/useServerDelete';
 import { ModalsContext } from '../../Contexts/Modals';
@@ -16,6 +16,17 @@ export default function UsersList() {
         setUsers(u => u.map(u => u.id === user.id ? { ...u, hidden: true } : u));
     }
 
+    const showUser = useCallback(_ => {
+        setUsers(u => u.map(u => {
+            delete u.hidden;
+            return u;
+        }));
+    }, []);
+
+    const removeHidden = useCallback(_ => {
+        setUsers(u => u.filter(u => !u.hidden));
+    }, []);
+
     useEffect(_ => {
         doGet();
     }, [doGet]);
@@ -31,10 +42,12 @@ export default function UsersList() {
         if (null === serverDeleteResponse) {
             return;
         }
-
-        console.log(serverDeleteResponse)
-        // setUsers(serverDeleteResponse.serverData.users ?? null)
-    }, [serverDeleteResponse]);
+        if (serverDeleteResponse.type === 'error') {
+            showUser();
+        } else {
+            removeHidden();
+        }
+    }, [serverDeleteResponse, showUser, removeHidden]);
 
 
     return (
@@ -72,7 +85,7 @@ export default function UsersList() {
                                                 <td>{u.role}</td>
                                                 <td className="two">
                                                     <ul className="actions special">
-                                                        <li><input type="button" value="redaguoti" className="small" /></li>
+                                                        <li><a href={l.USER_EDIT + '/' + u.id} type="button" className="small">redaguoti</a></li>
                                                         <li><input onClick={_ => setDeleteModal({
                                                             data: u,
                                                             doDelete,
