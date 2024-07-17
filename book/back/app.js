@@ -29,16 +29,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/admin/users', (_, res) => {
 
-    const sql = `
+    setTimeout(_ => {
+
+        const sql = `
         SELECT *
         FROM users`;
 
-    connection.query(sql, (err, rows) => {
-        if (err) throw err;
-        res.json({
-            users: rows
-        }).end();
-    });
+        connection.query(sql, (err, rows) => {
+            if (err) throw err;
+            res.json({
+                users: rows
+            }).end();
+        });
+
+    }, 1500);
 });
 
 app.delete('/admin/delete/user/:id', (req, res) => {
@@ -85,7 +89,7 @@ app.get('/admin/edit/user/:id', (req, res) => {
 
         const { id } = req.params;
         const sql = `
-        SELECT *
+        SELECT id, name, email, role
         FROM users
         WHERE id = ?
         `;
@@ -105,6 +109,78 @@ app.get('/admin/edit/user/:id', (req, res) => {
                 user: rows[0]
             }).end();
         });
+
+    }, 1500);
+
+});
+
+
+app.put('/admin/update/user/:id', (req, res) => {
+
+    setTimeout(_ => {
+
+    const { id } = req.params;
+    const { name, email, role, password } = req.body;
+
+    if (!password) {
+
+        const sql = `
+            UPDATE users
+            SET name = ?, email = ?, role = ?
+            WHERE id = ?
+            `;
+
+        connection.query(sql, [name, email, role, id], (err, result) => {
+            if (err) throw err;
+            const updated = result.affectedRows;
+            if (!updated) {
+                res.status(404).json({
+                    message: {
+                        type: 'info',
+                        title: 'Vartotojai',
+                        text: `Vartotojas nerastas`
+                    }
+                }).end();
+                return;
+            }
+            res.json({
+                message: {
+                    type: 'success',
+                    title: 'Vartotojai',
+                    text: `Vartotojas sėkmingai atnaujintas`
+                }
+            }).end();
+        });
+
+    } else {
+        const sql = `
+                UPDATE users
+                SET name = ?, email = ?, role = ?, password = ?
+                WHERE id = ?
+                `;
+
+        connection.query(sql, [name, email, role, md5(password), id], (err, result) => {
+            if (err) throw err;
+            const updated = result.affectedRows;
+            if (!updated) {
+                res.status(404).json({
+                    message: {
+                        type: 'info',
+                        title: 'Vartotojai',
+                        text: `Vartotojas nerastas`
+                    }
+                }).end();
+                return;
+            }
+            res.json({
+                message: {
+                    type: 'success',
+                    title: 'Vartotojai',
+                    text: `Vartotojas sėkmingai atnaujintas`
+                }
+            }).end();
+        });
+    }
 
     }, 1500);
 

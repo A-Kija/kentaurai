@@ -61,7 +61,7 @@ export default function UsersList() {
             </section>
             <section>
                 {
-                    users === null && <h2>Palaukite, siunčiamas vartotojų sąrašą</h2>
+                    users === null && <h3>Palaukite, siunčiamas vartotojų sąrašas...</h3>
                 }
                 {
                     users !== null && <div className="table-wrapper">

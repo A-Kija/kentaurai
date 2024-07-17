@@ -4,15 +4,20 @@ import { Modals } from './Contexts/Modals'
 import Msg from './Components/Common/Messages';
 import './Style/main.scss';
 import DeleteModal from './Components/Common/DeleteModal';
+import { Loader } from './Contexts/Loader';
+import LoaderContainer from './Components/Common/Loader';
 
 export default function App() {
   return (
     <Messages>
-      <Modals>
-        <Msg />
-        <DeleteModal />
-        <Router />
-      </Modals>
+      <Loader>
+        <Modals>
+          <Msg />
+          <DeleteModal />
+          <LoaderContainer />
+          <Router />
+        </Modals>
+      </Loader>
     </Messages>
   );
 }
