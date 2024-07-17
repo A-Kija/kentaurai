@@ -85,7 +85,7 @@ export default function UsersList() {
                                                 <td>{u.role}</td>
                                                 <td className="two">
                                                     <ul className="actions special">
-                                                        <li><a href={l.USER_EDIT + '/' + u.id} type="button" className="small">redaguoti</a></li>
+                                                        <li><a href={l.USER_EDIT + '/' + u.id} className="button small">redaguoti</a></li>
                                                         <li><input onClick={_ => setDeleteModal({
                                                             data: u,
                                                             doDelete,

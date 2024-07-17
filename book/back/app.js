@@ -79,6 +79,38 @@ app.delete('/admin/delete/user/:id', (req, res) => {
 });
 
 
+app.get('/admin/edit/user/:id', (req, res) => {
+
+    setTimeout(_ => {
+
+        const { id } = req.params;
+        const sql = `
+        SELECT *
+        FROM users
+        WHERE id = ?
+        `;
+        connection.query(sql, [id], (err, rows) => {
+            if (err) throw err;
+            if (!rows.length) {
+                res.status(404).json({
+                    message: {
+                        type: 'info',
+                        title: 'Vartotojai',
+                        text: `Vartotojas nerastas`
+                    }
+                }).end();
+                return;
+            }
+            res.json({
+                user: rows[0]
+            }).end();
+        });
+
+    }, 1500);
+
+});
+
+
 
 
 
