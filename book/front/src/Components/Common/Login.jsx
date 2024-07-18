@@ -1,8 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import * as l from '../../Constants/urls';
 import Input from '../Forms/Input';
 import useServerPost from '../../Hooks/useServerPost';
 import { LoaderContext } from '../../Contexts/Loader';
+import { AuthContext } from '../../Contexts/Auth';
 
 export default function Login() {
 
@@ -15,16 +16,26 @@ export default function Login() {
 
     const { setShow } = useContext(LoaderContext);
 
+    const { addUser } = useContext(AuthContext);
+
     const handleForm = e => {
         setForm(f => ({ ...f, [e.target.name]: e.target.value }));
     }
 
+    useEffect(_ => {
+        if (null === serverResponse) {
+            return;
+        }
+        if (serverResponse.type === 'success') {
+            addUser(serverResponse.serverData.user);
+            window.location.href = l.SITE_HOME;
+        }
+    }, [serverResponse, addUser]);
+
+
     const submit = _ => {
-
         setShow(true);
-
         doAction(form);
-
     }
 
     return (

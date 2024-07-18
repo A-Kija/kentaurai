@@ -14,7 +14,7 @@ const useServerPut = url => {
 
     const doAction = data => {
 
-        axios.put(`${SERVER_URL}${url}/${data.id}`, data)
+        axios.put(`${SERVER_URL}${url}/${data.id}`, data, { withCredentials: true })
             .then(res => {
                 messageSuccess(res);
                 setResponse({

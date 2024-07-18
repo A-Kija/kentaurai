@@ -19,7 +19,10 @@ const connection = mysql.createConnection({
 connection.connect();
 
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 app.use(cookieParser());
 // app.use(express.static('public'));
@@ -119,111 +122,117 @@ app.put('/admin/update/user/:id', (req, res) => {
 
     setTimeout(_ => {
 
-    const { id } = req.params;
-    const { name, email, role, password } = req.body;
+        const { id } = req.params;
+        const { name, email, role, password } = req.body;
 
-    if (!password) {
+        if (!password) {
 
-        const sql = `
+            const sql = `
             UPDATE users
             SET name = ?, email = ?, role = ?
             WHERE id = ?
             `;
 
-        connection.query(sql, [name, email, role, id], (err, result) => {
-            if (err) throw err;
-            const updated = result.affectedRows;
-            if (!updated) {
-                res.status(404).json({
+            connection.query(sql, [name, email, role, id], (err, result) => {
+                if (err) throw err;
+                const updated = result.affectedRows;
+                if (!updated) {
+                    res.status(404).json({
+                        message: {
+                            type: 'info',
+                            title: 'Vartotojai',
+                            text: `Vartotojas nerastas`
+                        }
+                    }).end();
+                    return;
+                }
+                res.json({
                     message: {
-                        type: 'info',
+                        type: 'success',
                         title: 'Vartotojai',
-                        text: `Vartotojas nerastas`
+                        text: `Vartotojas sėkmingai atnaujintas`
                     }
                 }).end();
-                return;
-            }
-            res.json({
-                message: {
-                    type: 'success',
-                    title: 'Vartotojai',
-                    text: `Vartotojas sėkmingai atnaujintas`
-                }
-            }).end();
-        });
+            });
 
-    } else {
-        const sql = `
+        } else {
+            const sql = `
                 UPDATE users
                 SET name = ?, email = ?, role = ?, password = ?
                 WHERE id = ?
                 `;
 
-        connection.query(sql, [name, email, role, md5(password), id], (err, result) => {
-            if (err) throw err;
-            const updated = result.affectedRows;
-            if (!updated) {
-                res.status(404).json({
+            connection.query(sql, [name, email, role, md5(password), id], (err, result) => {
+                if (err) throw err;
+                const updated = result.affectedRows;
+                if (!updated) {
+                    res.status(404).json({
+                        message: {
+                            type: 'info',
+                            title: 'Vartotojai',
+                            text: `Vartotojas nerastas`
+                        }
+                    }).end();
+                    return;
+                }
+                res.json({
                     message: {
-                        type: 'info',
+                        type: 'success',
                         title: 'Vartotojai',
-                        text: `Vartotojas nerastas`
+                        text: `Vartotojas sėkmingai atnaujintas`
                     }
                 }).end();
-                return;
-            }
-            res.json({
-                message: {
-                    type: 'success',
-                    title: 'Vartotojai',
-                    text: `Vartotojas sėkmingai atnaujintas`
-                }
-            }).end();
-        });
-    }
+            });
+        }
 
     }, 1500);
 
 });
 
 app.post('/login', (req, res) => {
-    
-        const { email, password } = req.body;
 
-        const session = uuidv4();
+    const { email, password } = req.body;
+    const session = uuidv4();
 
-        const sql = `
-        INSERT INTO users
-        (session)
-        VALUES (?)
-        WHERE email = ? AND password = ?
+    const sql = `
+            UPDATE users
+            SET session = ?
+            WHERE email = ? AND password = ?
         `;
 
-        connection.query(sql, [session, email, password], (err, result) => {
+    connection.query(sql, [session, email, md5(password)], (err, result) => {
+        if (err) throw err;
+        const logged = result.affectedRows;
+        if (!logged) {
+            res.status(401).json({
+                message: {
+                    type: 'error',
+                    title: 'Prisijungimas nepavyko',
+                    text: `Neteisingi prisijungimo duomenys`
+                }
+            }).end();
+            return;
+        }
+        const sql = `
+            SELECT id, name, email, role
+            FROM users
+            WHERE email = ? AND password = ?
+        `;
+        connection.query(sql, [email, md5(password)], (err, rows) => {
             if (err) throw err;
-            const logged = result.affectedRows;
-            if (!logged) {
-                res.status(422).json({
-                    message: {
-                        type: 'error',
-                        title: 'Prisijungimas nepavyko',
-                        text: `Neteisingi prisijungimo duomenys`
-                    }
-                }).end();
-                return;
-            }
+            res.cookie('book-session', session, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
             res.json({
                 message: {
                     type: 'success',
-                    title: 'Sveiki!',
+                    title: `Sveiki, ${rows?.[0]?.name}!`,
                     text: `Jūs sėkmingai prisijungėte`
                 },
-                session
+                session,
+                user: rows?.[0]
             }).end();
-
         });
-  
     });
+});
 
 
 

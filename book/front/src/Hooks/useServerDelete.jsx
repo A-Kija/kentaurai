@@ -14,7 +14,7 @@ const useServerDelete = url => {
 
     const doAction = data => {
 
-        axios.delete(`${SERVER_URL}${url}/${data.id}`)
+        axios.delete(`${SERVER_URL}${url}/${data.id}`, { withCredentials: true })
             .then(res => {
                 messageSuccess(res);
                 setResponse({

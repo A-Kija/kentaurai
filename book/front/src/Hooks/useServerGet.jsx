@@ -14,7 +14,7 @@ const useServerGet = url => {
 
     const doAction = useCallback((dataString = '') => {
 
-        axios.get(`${SERVER_URL}${url}${dataString}`)
+        axios.get(`${SERVER_URL}${url}${dataString}`, { withCredentials: true })
             .then(res => {
                 messageSuccess(res);
                 setResponse({

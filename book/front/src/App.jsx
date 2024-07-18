@@ -6,9 +6,11 @@ import './Style/main.scss';
 import DeleteModal from './Components/Common/DeleteModal';
 import { Loader } from './Contexts/Loader';
 import LoaderContainer from './Components/Common/Loader';
+import { Auth } from './Contexts/Auth';
 
 export default function App() {
   return (
+    <Auth>
     <Messages>
       <Loader>
         <Modals>
@@ -19,5 +21,6 @@ export default function App() {
         </Modals>
       </Loader>
     </Messages>
+    </Auth>
   );
 }

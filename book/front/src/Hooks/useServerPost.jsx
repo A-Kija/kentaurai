@@ -14,12 +14,12 @@ const useServerPost = url => {
 
     const doAction = data => {
 
-        axios.post(`${SERVER_URL}${url}`, data)
+        axios.post(`${SERVER_URL}${url}`, data, { withCredentials: true })
             .then(res => {
                 messageSuccess(res);
                 setResponse({
                     type: 'success',
-                    data: res.data
+                    serverData: res.data
                 });
             })
             .catch(error => {
