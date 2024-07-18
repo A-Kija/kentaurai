@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
-// const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 // const fs = require('node:fs');
 const md5 = require('md5');
 const app = express();
@@ -186,7 +186,44 @@ app.put('/admin/update/user/:id', (req, res) => {
 
 });
 
+app.post('/login', (req, res) => {
+    
+        const { email, password } = req.body;
 
+        const session = uuidv4();
+
+        const sql = `
+        INSERT INTO users
+        (session)
+        VALUES (?)
+        WHERE email = ? AND password = ?
+        `;
+
+        connection.query(sql, [session, email, password], (err, result) => {
+            if (err) throw err;
+            const logged = result.affectedRows;
+            if (!logged) {
+                res.status(422).json({
+                    message: {
+                        type: 'error',
+                        title: 'Prisijungimas nepavyko',
+                        text: `Neteisingi prisijungimo duomenys`
+                    }
+                }).end();
+                return;
+            }
+            res.json({
+                message: {
+                    type: 'success',
+                    title: 'Sveiki!',
+                    text: `Jūs sėkmingai prisijungėte`
+                },
+                session
+            }).end();
+
+        });
+  
+    });
 
 
 

@@ -2,12 +2,15 @@ import axios from 'axios';
 import { SERVER_URL } from '../Constants/urls';
 import { useContext, useState } from 'react';
 import { MessagesContext } from '../Contexts/Messages';
+import { LoaderContext } from '../Contexts/Loader';
 
 const useServerDelete = url => {
 
     const [response, setResponse] = useState(null);
 
     const { messageError, messageSuccess } = useContext(MessagesContext);
+
+    const { setShow } = useContext(LoaderContext);
 
     const doAction = data => {
 
@@ -25,6 +28,9 @@ const useServerDelete = url => {
                     type: 'error',
                     serverData: error
                 });
+            })
+            .finally(_ => {
+                setShow(false);
             });
 
     }

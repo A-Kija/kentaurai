@@ -2,12 +2,15 @@ import axios from 'axios';
 import { SERVER_URL } from '../Constants/urls';
 import { useContext, useState } from 'react';
 import { MessagesContext } from '../Contexts/Messages';
+import { LoaderContext } from '../Contexts/Loader';
 
 const useServerPut = url => {
 
     const [response, setResponse] = useState(null);
 
     const { messageError, messageSuccess } = useContext(MessagesContext);
+
+    const { setShow } = useContext(LoaderContext);
 
     const doAction = data => {
 
@@ -26,6 +29,9 @@ const useServerPut = url => {
                     type: 'error',
                     serverData: error
                 });
+            })
+            .finally(_ => {
+                setShow(false);
             });
 
     }
