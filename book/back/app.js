@@ -30,6 +30,68 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
+const checkSession = (req, _, next) => {
+    const session = req.cookies['book-session'];
+
+
+
+    if (!session) {
+        return next();
+    }
+    const sql = `
+        SELECT id, name, email, role 
+        FROM users
+        WHERE session = ?
+    `;
+    connection.query(sql, [session], (err, rows) => {
+        if (err) throw err;
+
+        console.log(session, rows);
+
+        if (!rows.length) {
+            return next();
+        }
+        req.user = rows[0];
+        next();
+    });
+}
+
+const checkUserIsAuthorized = (req, res, roles) => {
+    if (!req.user) {
+        res.status(401).json({
+            message: {
+                type: 'error',
+                title: 'Neautorizuotas',
+                text: `Jūs turite būti prisijungęs`
+            },
+            reason: 'not-logged-in'
+        }).end();
+        return false;
+    }
+    if (!roles.includes(req.user.role)) {
+        res.status(401).json({
+            message: {
+                type: 'error',
+                title: 'Neautorizuotas',
+                text: `Jūs neturite teisių atlikti šią operaciją`
+            },
+            reason: 'not-authorized'
+        }).end();
+        return false;
+    }
+    return true;
+}
+
+
+
+
+app.use(checkSession);
+
+
+
+
+
+
 app.get('/admin/users', (_, res) => {
 
     setTimeout(_ => {
@@ -89,6 +151,11 @@ app.delete('/admin/delete/user/:id', (req, res) => {
 app.get('/admin/edit/user/:id', (req, res) => {
 
     setTimeout(_ => {
+
+
+        if (!checkUserIsAuthorized(req, res, ['admin'])) {
+            return;
+        }
 
         const { id } = req.params;
         const sql = `
@@ -191,47 +258,51 @@ app.put('/admin/update/user/:id', (req, res) => {
 
 app.post('/login', (req, res) => {
 
-    const { email, password } = req.body;
-    const session = uuidv4();
+    setTimeout(_ => {
 
-    const sql = `
+        const { email, password } = req.body;
+        const session = md5(uuidv4());
+
+        const sql = `
             UPDATE users
             SET session = ?
             WHERE email = ? AND password = ?
         `;
 
-    connection.query(sql, [session, email, md5(password)], (err, result) => {
-        if (err) throw err;
-        const logged = result.affectedRows;
-        if (!logged) {
-            res.status(401).json({
-                message: {
-                    type: 'error',
-                    title: 'Prisijungimas nepavyko',
-                    text: `Neteisingi prisijungimo duomenys`
-                }
-            }).end();
-            return;
-        }
-        const sql = `
+        connection.query(sql, [session, email, md5(password)], (err, result) => {
+            if (err) throw err;
+            const logged = result.affectedRows;
+            if (!logged) {
+                res.status(401).json({
+                    message: {
+                        type: 'error',
+                        title: 'Prisijungimas nepavyko',
+                        text: `Neteisingi prisijungimo duomenys`
+                    }
+                }).end();
+                return;
+            }
+            const sql = `
             SELECT id, name, email, role
             FROM users
             WHERE email = ? AND password = ?
         `;
-        connection.query(sql, [email, md5(password)], (err, rows) => {
-            if (err) throw err;
-            res.cookie('book-session', session, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
-            res.json({
-                message: {
-                    type: 'success',
-                    title: `Sveiki, ${rows?.[0]?.name}!`,
-                    text: `Jūs sėkmingai prisijungėte`
-                },
-                session,
-                user: rows?.[0]
-            }).end();
+            connection.query(sql, [email, md5(password)], (err, rows) => {
+                if (err) throw err;
+                res.cookie('book-session', session, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
+                res.json({
+                    message: {
+                        type: 'success',
+                        title: `Sveiki, ${rows?.[0]?.name}!`,
+                        text: `Jūs sėkmingai prisijungėte`
+                    },
+                    session,
+                    user: rows?.[0]
+                }).end();
+            });
         });
-    });
+
+    }, 1500);
 });
 
 
