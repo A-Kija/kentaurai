@@ -26,7 +26,8 @@
 		}
 	}
 
-	a {
+	a, button.link {
+		border: none;
 		@include vendor('transition', (
 			'color #{_duration(transition)} ease-in-out',
 			'border-bottom-color #{_duration(transition)} ease-in-out'
@@ -34,6 +35,8 @@
 		border-bottom: dotted 1px;
 		color: _palette(accent);
 		text-decoration: none;
+		padding: 0;
+		background-color: transparent;
 
 		&:hover {
 			border-bottom-color: _palette(accent);

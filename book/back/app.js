@@ -30,11 +30,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
+
+const maintenance = (req, res, next) => {
+    res.status(503).json({
+        message: {
+            type: 'error',
+            title: 'Techniniai darbai',
+            text: `Atsiprašome, bet šiuo metu vykdomi techniniai darbai`
+        }
+    }).end();
+}
+
+
 const checkSession = (req, _, next) => {
     const session = req.cookies['book-session'];
-
-
-
     if (!session) {
         return next();
     }
@@ -45,9 +54,6 @@ const checkSession = (req, _, next) => {
     `;
     connection.query(sql, [session], (err, rows) => {
         if (err) throw err;
-
-        console.log(session, rows);
-
         if (!rows.length) {
             return next();
         }
@@ -84,6 +90,7 @@ const checkUserIsAuthorized = (req, res, roles) => {
 
 
 
+// app.use(maintenance);
 
 app.use(checkSession);
 
