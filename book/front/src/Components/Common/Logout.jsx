@@ -7,9 +7,7 @@ import { LoaderContext } from '../../Contexts/Loader';
 export default function Logout() {
 
     const { user, removeUser } = useContext(AuthContext);
-
     const { doAction, serverResponse } = useServerPost(l.SERVER_LOGOUT);
-
     const { setShow } = useContext(LoaderContext);
 
     useEffect(_ => {
@@ -27,4 +25,3 @@ export default function Logout() {
     );
 
 }
-
