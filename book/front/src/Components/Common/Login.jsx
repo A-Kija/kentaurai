@@ -32,7 +32,7 @@ export default function Login() {
         } else {
             removeUser();
         }
-    }, [serverResponse, addUser]);
+    }, [serverResponse, addUser, removeUser]);
 
 
     const submit = _ => {
