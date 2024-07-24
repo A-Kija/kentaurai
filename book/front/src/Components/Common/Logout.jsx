@@ -16,7 +16,7 @@ export default function Logout() {
         }
         if (serverResponse.type === 'success') {
             removeUser()
-            window.location.href = l.SITE_LOGIN;
+            window.location.hash = l.SITE_LOGIN;
         }
     }, [serverResponse, removeUser]);
 

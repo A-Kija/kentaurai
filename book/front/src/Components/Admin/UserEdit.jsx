@@ -33,7 +33,7 @@ export default function UserEdit() {
             return;
         }
         if ('success' === serverPutResponse.type) {
-            window.location.href = l.USERS_LIST;
+            window.location.hash = l.USERS_LIST;
         }
     }, [serverPutResponse]);
 

@@ -9,6 +9,7 @@ import * as l from '../Constants/urls';
 import Dashbord from '../Components/Admin/Dashbord';
 import UsersList from '../Components/Admin/UsersList';
 import UserEdit from '../Components/Admin/UserEdit';
+import RouteGate from '../Components/Common/RouteGate';
 
 
 const RouterContext = createContext([]);
@@ -46,8 +47,10 @@ const Router = _ => {
 
     const [route, setRoute] = useState('');
     const [params, setParams] = useState([]);
+    const [prevPageLink, setPrevPageLink] = useState(['','']);
 
     const handleHashChange = useCallback(_ => {
+        setPrevPageLink(p => [p[1], window.location.hash]);
         const hash = window.location.hash.split('/');
         hash[0] || (hash[0] = '#');
         setRoute(hash.shift());
@@ -55,6 +58,7 @@ const Router = _ => {
     }, [setRoute, setParams]);
 
     useEffect(_ => {
+        setPrevPageLink(p => [p[1], window.location.hash]);
         const hash = window.location.hash.split('/');
         hash[0] || (hash[0] = '#');
         setRoute(hash.shift());
@@ -69,9 +73,9 @@ const Router = _ => {
         { path: '#bebras', pc: 0, component: <Web><Bebras /></Web> },
         { path: '#zebras', pc: 0, component: <Web><Zebras /></Web> },
 
-        { path: l.SITE_DASHBORD, pc: 1, p1: 'dashbord', component: <Admin><Dashbord /></Admin> },
-        { path: l.USERS_LIST, pc: 1, p1: 'users', component: <Admin><UsersList /></Admin> },
-        { path: l.USER_EDIT, pc: 2, p1: 'user-edit', component: <Admin><UserEdit /></Admin> },
+        { path: l.SITE_DASHBORD, pc: 1, p1: 'dashbord', component: <RouteGate role={['admin']}><Admin><Dashbord /></Admin></RouteGate> },
+        { path: l.USERS_LIST, pc: 1, p1: 'users', component: <RouteGate role={['admin']}><Admin><UsersList /></Admin></RouteGate> },
+        { path: l.USER_EDIT, pc: 2, p1: 'user-edit', component: <RouteGate role={['admin']}><Admin><UserEdit /></Admin></RouteGate> },
 
         { path: l.SITE_REGISTER, pc: 0, component: <Register/> },
         { path: l.SITE_LOGIN, pc: 0, component: <Login/> },
@@ -94,7 +98,7 @@ const Router = _ => {
 
     return (
         <RouterContext.Provider value={{
-            params
+            params, prevPageLink
             }}>
             {routeComponent}
         </RouterContext.Provider>

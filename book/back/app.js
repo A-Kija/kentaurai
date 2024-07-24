@@ -99,9 +99,13 @@ app.use(checkSession);
 
 
 
-app.get('/admin/users', (_, res) => {
+app.get('/admin/users', (req, res) => {
 
     setTimeout(_ => {
+
+        if (!checkUserIsAuthorized(req, res, ['admin'])) {
+            return;
+        }
 
         const sql = `
         SELECT *

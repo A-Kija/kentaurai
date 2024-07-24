@@ -25,7 +25,7 @@ export default function Login() {
         }
         if (serverResponse.type === 'success') {
             addUser(serverResponse.serverData.user);
-            window.location.href = l.SITE_HOME;
+            window.location.hash = l.SITE_HOME;
         } else {
             removeUser();
         }
