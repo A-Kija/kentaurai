@@ -4,7 +4,6 @@ import useServerDelete from '../../Hooks/useServerDelete';
 import { ModalsContext } from '../../Contexts/Modals';
 import * as l from '../../Constants/urls';
 
-
 export default function UsersList() {
 
     const { doAction: doGet, serverResponse: serverGetResponse } = useServerGet(l.SERVER_GET_USERS);

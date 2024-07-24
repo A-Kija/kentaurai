@@ -95,7 +95,23 @@ const checkUserIsAuthorized = (req, res, roles) => {
 app.use(checkSession);
 
 
+app.get('/web/content', (req, res) => {
 
+    setTimeout(_ => {
+
+        const sql = `
+        SELECT *
+        FROM options`;
+
+        connection.query(sql, (err, rows) => {
+            if (err) throw err;
+            res.json({
+                content: rows
+            }).end();
+        });
+
+    }, 1500);
+});
 
 
 

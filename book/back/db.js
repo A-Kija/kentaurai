@@ -32,12 +32,36 @@ const createUsersTable = _ => {
     });
 }
 
+const createOptionsTable = _ => {
+    const sql = `
+        CREATE TABLE IF NOT EXISTS options (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(40) NOT NULL UNIQUE,
+        value TEXT NOT NULL
+    )`;
+
+    connection.query(sql, function (err) {
+        if (err) throw err;
+        console.log('Options table created');
+    });
+}
+
+
 const dropUsersTable = _ => {
     const sql = 'DROP TABLE IF EXISTS users';
 
     connection.query(sql, function (err) {
         if (err) throw err;
         console.log('Users table dropped');
+    });
+}
+
+const dropOptionsTable = _ => {
+    const sql = 'DROP TABLE IF EXISTS options';
+
+    connection.query(sql, function (err) {
+        if (err) throw err;
+        console.log('Options table dropped');
     });
 }
 
@@ -56,11 +80,37 @@ const seedUsersTable = _ => {
     });
 }
 
+const seedOptionsTable = _ => {
+
+    const contacts = {
+        phone: '123456789',
+        email: 'jonas.raudonoji@knyga',
+        address: 'Knygos g. 1, Knygynas',
+        title: 'Kontaktai',
+        about: 'Apsaugokite žvėris ir paukščius nuo vandens ir ugnies. Globokite ir susisiekite su mumis.',    
+    }
+
+    const sql = `
+        INSERT INTO options
+        (name, value)
+        VALUES
+        ('contacts', '${JSON.stringify(contacts)}')
+
+    `;
+    connection.query(sql, function (err) {
+        if (err) throw err;
+        console.log('Options table seeded');
+    });
+}
+
 
 
 dropUsersTable();
+dropOptionsTable();
 createUsersTable();
+createOptionsTable();
 seedUsersTable();
+seedOptionsTable();
 
 
 

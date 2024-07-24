@@ -17,7 +17,11 @@ export const USERS_LIST = '#admin/users';
 export const USER_EDIT = '#admin/user-edit';
 
 
-// Server URLs
+// Server front URLs
+export const GET_WEB_CONTENT = 'web/content';
+
+
+// Server back URLs
 export const SERVER_REGISTER = 'register';
 export const SERVER_GET_USERS = 'admin/users';
 export const SERVER_DELETE_USER = 'admin/delete/user';
