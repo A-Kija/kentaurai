@@ -94,6 +94,24 @@ const checkUserIsAuthorized = (req, res, roles) => {
 
 app.use(checkSession);
 
+app.get('/web/types', (req, res) => {
+
+    setTimeout(_ => {
+
+        const sql = `SELECT * FROM types`;
+
+        connection.query(sql, (err, rows) => {
+            if (err) throw err;
+            res.json({
+                types: rows
+            }).end();
+        });
+
+    }, 1500);
+
+
+});
+
 
 app.get('/web/content', (req, res) => {
 
@@ -128,7 +146,8 @@ app.get('/admin/edit/contacts', (req, res) => {
     }, 1500);
 });
 
-app.put('admin/update/contacts', (req, res) => {
+
+app.put('/admin/update/contacts', (req, res) => {
 
     setTimeout(_ => {
 

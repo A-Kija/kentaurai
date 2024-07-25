@@ -13,7 +13,6 @@ connection.connect(function (err) {
     console.log('Connected to the database');
 });
 
-// Users table
 
 const createUsersTable = _ => {
     const sql = `
@@ -46,6 +45,21 @@ const createOptionsTable = _ => {
     });
 }
 
+const createTypesTable = _ => {
+    const sql = `
+        CREATE TABLE IF NOT EXISTS types (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(100),
+        description TEXT,
+        icon VARCHAR(100)
+    )`;
+
+    connection.query(sql, function (err) {
+        if (err) throw err;
+        console.log('Types table created');
+    });
+}
+
 
 const dropUsersTable = _ => {
     const sql = 'DROP TABLE IF EXISTS users';
@@ -62,6 +76,15 @@ const dropOptionsTable = _ => {
     connection.query(sql, function (err) {
         if (err) throw err;
         console.log('Options table dropped');
+    });
+}
+
+const dropTypesTable = _ => {
+    const sql = 'DROP TABLE IF EXISTS types';
+
+    connection.query(sql, function (err) {
+        if (err) throw err;
+        console.log('Types table dropped');
     });
 }
 
@@ -103,14 +126,32 @@ const seedOptionsTable = _ => {
     });
 }
 
+const seedTypesTable = _ => {
+    const sql = `
+        INSERT INTO types
+        (title, description, icon)
+        VALUES
+        ('Upinis bebras', 'Lietuvoje bebrai nuo seno gyveno Nemuno baseine. Jų liekanų randama piliakalniuose, durpynuose. Bebrai šalyje buvo intensyviai medžiojami dėl mėsos (ypač uodegos), kailio ir sruoglių. 1555 m. švedų kronikininko Olaus Magnuso „Šiaurės tautų istorijoje“ rašoma, kad Lietuva buvusi pagrindinė bebrų kailių tiekėja Europoje. 1529 m. bebrų medžioklė buvo nustatyta Pirmajame Lietuvos statute: bebravietėse uždrausta lankytis pašaliniams.', 'fa-gem'),
+        ('Barsukas urvinis', 'Paplitę visoje Lietuvoje, bet negausiai. 1997 metais užregistruota apie 2500 individų. Priešų barsukai turi nedaug – tai vilkai ir lūšys. Lietuvoje medžiojamas (leidžiama medžioti tik spalio-lapkričio mėn.). Kailis nėra ypač vertinamas.', 'fa-paper-plane'),
+        ('Briedis miškinis', 'Vasarą gyvena lapuočių ir mišriuose miškuose, žiemą dažniausiai pušynuose. Veiklus ištisus metus. Briedis remiasi dviem pirštais, antros poros pirštų atspaudus galima rasti tik sniege, purioje, klampioje durpinėje dirvoje arba briedžiams šuoliuojant. Nors briedis stambus, tačiau labai judrus žvėris ir labai pasitikintis aplinkiniais, dėl to lengvai nušaunamas, ypač dabartinių gerai ginkluotų brakonierių. Žiemą briedžiai gyvena mišriais pulkais.', 'fa-rocket')
+    `;
+    connection.query(sql, function (err) {
+        if (err) throw err;
+        console.log('Types table seeded');
+    });
+}
+
 
 
 dropUsersTable();
 dropOptionsTable();
+dropTypesTable();
 createUsersTable();
 createOptionsTable();
+createTypesTable();
 seedUsersTable();
 seedOptionsTable();
+seedTypesTable();
 
 
 

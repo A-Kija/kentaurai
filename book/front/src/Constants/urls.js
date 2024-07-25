@@ -19,6 +19,7 @@ export const EDIT_CONTACTS = '#admin/edit-contacts';
 
 // Server front URLs
 export const GET_WEB_CONTENT = 'web/content';
+export const GET_TYPES = 'web/types';
 
 
 // Server back URLs

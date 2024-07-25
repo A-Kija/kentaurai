@@ -15,7 +15,9 @@ const useServerPut = url => {
     const { prevPageLink } = useContext(RouterContext);
     const doAction = data => {
 
-        axios.put(`${l.SERVER_URL}${url}/${data.id}`, data, { withCredentials: true })
+        const param = data.id ? `/${data.id}` : '';
+
+        axios.put(`${l.SERVER_URL}${url}${param}`, data, { withCredentials: true })
             .then(res => {
                 messageSuccess(res);
                 setResponse({

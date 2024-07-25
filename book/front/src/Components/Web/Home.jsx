@@ -1,4 +1,31 @@
+import { useEffect, useState } from 'react';
+import useServerGet from '../../Hooks/useServerGet';
+import * as l from '../../Constants/urls';
+
+
+
 export default function Home() {
+
+
+
+    const [types, setTypes] = useState(null);
+    const { doAction: doGet, serverResponse: serverGetResponse } = useServerGet(l.GET_TYPES);
+
+
+    useEffect(_ => {
+        doGet();
+    }, [doGet]);
+
+    useEffect(_ => {
+        if (null === serverGetResponse) {
+            return;
+        }
+        if (serverGetResponse.type === 'success') {
+            setTypes(serverGetResponse.serverData.types);
+        }
+    }, [serverGetResponse]);
+
+
 
     return (
         <>
@@ -25,34 +52,20 @@ export default function Home() {
                     <h2>Erat lacinia</h2>
                 </header>
                 <div className="features">
-                    <article>
-                        <span className="icon fa-gem"></span>
-                        <div className="content">
-                            <h3>Portitor ullamcorper</h3>
-                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span className="icon solid fa-paper-plane"></span>
-                        <div className="content">
-                            <h3>Sapien veroeros</h3>
-                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span className="icon solid fa-rocket"></span>
-                        <div className="content">
-                            <h3>Quam lorem ipsum</h3>
-                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span className="icon solid fa-signal"></span>
-                        <div className="content">
-                            <h3>Sed magna finibus</h3>
-                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-                        </div>
-                    </article>
+                {
+                    types === null ? <p>Palaukite kraunasi...</p> : types.map(t => (
+
+                        
+                            <article key={t.id}>
+                                <span className={'icon ' +  t.icon}></span>
+                                <div className="content">
+                                    <h3>{t.title}</h3>
+                                    <p>{t.description}</p>
+                                </div>
+                            </article>
+                        
+                    ))
+                }
                 </div>
             </section>
 

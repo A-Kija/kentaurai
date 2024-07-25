@@ -9,6 +9,7 @@ export default function Layout({ children }) {
 	const [webContent, setWebContent] = useState(null);
 	const { doAction: doGet, serverResponse: serverGetResponse } = useServerGet(l.GET_WEB_CONTENT);
 
+	
 	useEffect(_ => {
         doGet();
     }, [doGet]);
