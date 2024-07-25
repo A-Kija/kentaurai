@@ -29,6 +29,7 @@ const useServerGet = url => {
                 messageError(error);
                 if (error.response && 401 === error.response.status && 'not-logged-in' === error.response.data.reason) {
                     removeUser();
+                    console.log('not-logged-in');
                     window.location.hash = l.SITE_LOGIN;
                     return;
                 }

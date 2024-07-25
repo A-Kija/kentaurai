@@ -10,6 +10,7 @@ export default function Menu() {
             <ul>
                 <li><a href={'/' + l.SITE_DASHBORD}>Lenta</a></li>
                 <li><a href={'/' + l.USERS_LIST}>Vartotojai</a></li>
+                <li><a href={'/' + l.EDIT_CONTACTS}>Kontaktų redagavimas</a></li>
             </ul>
         </nav>
     );
