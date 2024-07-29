@@ -25,7 +25,7 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
-// app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -95,21 +95,27 @@ const checkUserIsAuthorized = (req, res, roles) => {
 app.use(checkSession);
 
 app.get('/web/types', (req, res) => {
-
     setTimeout(_ => {
-
         const sql = `SELECT * FROM types`;
-
         connection.query(sql, (err, rows) => {
             if (err) throw err;
             res.json({
                 types: rows
             }).end();
         });
-
     }, 1500);
+});
 
-
+app.get('/web/posts', (req, res) => {
+    setTimeout(_ => {
+        const sql = `SELECT * FROM posts`;
+        connection.query(sql, (err, rows) => {
+            if (err) throw err;
+            res.json({
+                posts: rows
+            }).end();
+        });
+    }, 500);
 });
 
 
