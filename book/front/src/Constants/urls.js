@@ -40,6 +40,7 @@ export const SERVER_GET_POSTS = 'admin/posts';
 export const SERVER_DELETE_POST = 'admin/delete/post';
 export const SERVER_EDIT_POST = 'admin/edit/post';
 export const SERVER_UPDATE_POST = 'admin/update/post';
+export const SERVER_STORE_POST = 'admin/store/post';
 
 export const SERVER_EDIT_CONTACTS = 'admin/edit/contacts';
 export const SERVER_UPDATE_CONTACTS = 'admin/update/contacts';

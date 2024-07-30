@@ -53,6 +53,37 @@ const writeImage = imageBase64 => {
     return filename;
 };
 
+const deleteImage = postId => {
+    let sql = 'SELECT photo FROM posts WHERE id = ?';
+    connection.query(sql, [postId], (err, results) => {
+        if (err) {
+            res.status
+        } else {
+            if (results[0].photo) {
+                fs.unlinkSync('public/img/' + results[0].photo);
+            }
+        }
+    });
+};
+
+const preDeleteImage = postId => {
+    let sql = 'SELECT photo FROM posts WHERE id = ?';
+    connection.query(sql, [postId], (err, results) => {
+        if (err) {
+            return null;
+        } else {
+            if (results[0].photo) {
+                return results[0].photo;
+            }
+        }
+    });
+};
+
+const doDeleteImage = filename => {
+    fs.unlinkSync('public/img/' + filename);
+};
+
+
 
 
 const maintenance = (req, res, next) => {
@@ -182,6 +213,7 @@ app.get('/admin/posts', (req, res) => {
 app.delete('/admin/delete/post/:id', (req, res) => {
     setTimeout(_ => {
         const { id } = req.params;
+        const filename = preDeleteImage(id);
         const sql = `
         DELETE 
         FROM posts 
@@ -199,6 +231,9 @@ app.delete('/admin/delete/post/:id', (req, res) => {
                     }
                 }).end();
                 return;
+            }
+            if (filename) {
+                doDeleteImage(filename);
             }
             res.json({
                 message: {
@@ -251,7 +286,8 @@ app.put('/admin/update/post/:id', (req, res) => {
         const { title, content, preview, photo } = req.body;
 
         if (photo) {
-            const filename = writeImage(photo);
+            photo.length > 40 && deleteImage(id);
+            const filename = photo.length > 40 ? writeImage(photo) : photo;
             const sql = `
             UPDATE posts
             SET title = ?, content = ?, preview = ?, photo = ?
@@ -279,9 +315,10 @@ app.put('/admin/update/post/:id', (req, res) => {
                 }).end();
             });
         } else {
+            deleteImage(id);
             const sql = `
             UPDATE posts
-            SET title = ?, content = ?, preview = ?
+            SET title = ?, content = ?, preview = ?, photo = NULL
             WHERE id = ?
             `;
             connection.query(sql, [title, content, preview, id], (err, result) => {
@@ -306,6 +343,31 @@ app.put('/admin/update/post/:id', (req, res) => {
                 }).end();
             });
         }
+
+    }, 1500);
+
+});
+
+app.post('/admin/store/post', (req, res) => {
+
+    setTimeout(_ => {
+
+        const { title, content, preview, photo } = req.body;
+        const filename = writeImage(photo);
+        const sql = `
+            INSERT INTO posts (title, content, preview, photo)
+            VALUES ( ?, ?, ?, ? )
+            `;
+        connection.query(sql, [title, content, preview, filename], (err) => {
+            if (err) throw err;
+            res.status(201).json({
+                message: {
+                    type: 'success',
+                    title: 'Straipsniai',
+                    text: `Straipsnis sėkmingai sukurtas`
+                }
+            }).end();
+        });
 
     }, 1500);
 

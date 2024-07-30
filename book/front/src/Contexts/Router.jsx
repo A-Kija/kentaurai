@@ -14,6 +14,7 @@ import RouteGate from '../Components/Common/RouteGate';
 
 import PostsList from '../Components/Admin/PostsList';
 import PostEdit from '../Components/Admin/PostEdit';
+import PostCreate from '../Components/Admin/PostCreate';
 
 
 const RouterContext = createContext([]);
@@ -84,6 +85,7 @@ const Router = _ => {
 
         { path: l.POSTS_LIST, pc: 1, p1: 'posts', component: <RouteGate role={['admin']}><Admin><PostsList /></Admin></RouteGate> },
         { path: l.POST_EDIT, pc: 2, p1: 'post-edit', component: <RouteGate role={['admin']}><Admin><PostEdit /></Admin></RouteGate> },
+        { path: l.POST_ADD, pc: 1, p1: 'post-add', component: <RouteGate role={['admin']}><Admin><PostCreate /></Admin></RouteGate> },
 
         { path: l.SITE_REGISTER, pc: 0, component: <Register/> },
         { path: l.SITE_LOGIN, pc: 0, component: <Login/> },
