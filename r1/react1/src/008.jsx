@@ -126,6 +126,7 @@ function App() {
 
 
 
+
                 <fieldset>
                     <legend>FILE</legend>
                     <input type="file" id="F" ref={imageInput} onChange={handleImage} />

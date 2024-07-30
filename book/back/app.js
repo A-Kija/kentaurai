@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mysql = require('mysql');
 const { v4: uuidv4 } = require('uuid');
-// const fs = require('node:fs');
+const fs = require('node:fs');
 const md5 = require('md5');
 const app = express();
 const port = 3001;
@@ -26,8 +26,32 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.static('public'));
+app.use(express.json({ limit: '10mb' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
+// files
+const writeImage = imageBase64 => {
+    if (!imageBase64) {
+        return null;
+    }
+    let type;
+    let image;
+    if (imageBase64.indexOf('data:image/png;base64,') === 0) {
+        type = 'png';
+        image = Buffer.from(imageBase64.replace(/^data:image\/png;base64,/, ''), 'base64');
+    } else if (imageBase64.indexOf('data:image/jpeg;base64,') === 0) {
+        type = 'jpg';
+        image = Buffer.from(imageBase64.replace(/^data:image\/jpeg;base64,/, ''), 'base64');
+    } else {
+        res.status(500).send('Bad image format');
+        return;
+    }
+    const filename = md5(uuidv4()) + '.' + type;
+    fs.writeFileSync('public/img/' + filename, image);
+    return filename;
+};
 
 
 
@@ -218,6 +242,75 @@ app.get('/admin/edit/post/:id', (req, res) => {
     }, 1500);
 });
 
+app.put('/admin/update/post/:id', (req, res) => {
+
+    setTimeout(_ => {
+
+        const { id } = req.params;
+
+        const { title, content, preview, photo } = req.body;
+
+        if (photo) {
+            const filename = writeImage(photo);
+            const sql = `
+            UPDATE posts
+            SET title = ?, content = ?, preview = ?, photo = ?
+            WHERE id = ?
+            `;
+            connection.query(sql, [title, content, preview, filename, id], (err, result) => {
+                if (err) throw err;
+                const updated = result.affectedRows;
+                if (!updated) {
+                    res.status(404).json({
+                        message: {
+                            type: 'info',
+                            title: 'Straipsniai',
+                            text: `Straipsnis nerastas`
+                        }
+                    }).end();
+                    return;
+                }
+                res.json({
+                    message: {
+                        type: 'success',
+                        title: 'Straipsniai',
+                        text: `Straipsnis sėkmingai atnaujintas`
+                    }
+                }).end();
+            });
+        } else {
+            const sql = `
+            UPDATE posts
+            SET title = ?, content = ?, preview = ?
+            WHERE id = ?
+            `;
+            connection.query(sql, [title, content, preview, id], (err, result) => {
+                if (err) throw err;
+                const updated = result.affectedRows;
+                if (!updated) {
+                    res.status(404).json({
+                        message: {
+                            type: 'info',
+                            title: 'Straipsniai',
+                            text: `Straipsnis nerastas`
+                        }
+                    }).end();
+                    return;
+                }
+                res.json({
+                    message: {
+                        type: 'success',
+                        title: 'Straipsniai',
+                        text: `Straipsnis sėkmingai atnaujintas`
+                    }
+                }).end();
+            });
+        }
+
+    }, 1500);
+
+});
+
 
 
 app.get('/admin/edit/contacts', (req, res) => {
@@ -245,24 +338,24 @@ app.put('/admin/update/contacts', (req, res) => {
         //TODO: Validation
 
         const value = JSON.stringify({ title, email, about, phone, address });
-        
-            const sql = `
+
+        const sql = `
                 UPDATE options
                 SET value = ?
                 WHERE name = 'contacts'
                 `;
 
-            connection.query(sql, [value], (err) => {
-                if (err) throw err;
-                res.json({
-                    message: {
-                        type: 'success',
-                        title: 'Vartotojai',
-                        text: `Kontaktai sėkmingai atnaujinti`
-                    }
-                }).end();
-            });
-        
+        connection.query(sql, [value], (err) => {
+            if (err) throw err;
+            res.json({
+                message: {
+                    type: 'success',
+                    title: 'Vartotojai',
+                    text: `Kontaktai sėkmingai atnaujinti`
+                }
+            }).end();
+        });
+
 
     }, 1500);
 

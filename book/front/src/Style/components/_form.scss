@@ -178,3 +178,37 @@
 		color: _palette(fg-light) !important;
 		opacity: 1.0;
 	}
+
+
+	.up-img {
+		position: relative;
+		margin-top: 10px;
+	  }
+	  
+	  .up-img .remove {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		cursor: pointer;
+	  }
+	  
+	  
+	  .up-img img {
+		height: 200px;
+		width: auto;
+	  }
+	  
+	  label.img-label {
+		cursor: pointer;
+	  }
+
+	  input[type="file"],
+		input[type="checkbox"] {
+		display: none;
+		}
+
+	.cb-svg svg {
+	fill: _palette(accent);;
+	width: 30px;
+	height: 30px;
+	}

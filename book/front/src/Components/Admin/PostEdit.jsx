@@ -4,8 +4,10 @@ import useServerGet from '../../Hooks/useServerGet';
 import useServerPut from '../../Hooks/useServerPut';
 import * as l from '../../Constants/urls';
 import Input from '../Forms/Input';
+import Image from '../Forms/Image';
 import Textarea from '../Forms/Textarea';
 import { LoaderContext } from '../../Contexts/Loader';
+import { rem } from '../../Constants/icons';
 
 export default function PostEdit() {
 
@@ -91,7 +93,7 @@ export default function PostEdit() {
                 }
                 {
                     null !== post && <div className="row aln-center">
-                        <div className="col-6 col-8-large col-10-medium col-12-small">
+                        <div className="col-8 col-8-large col-10-medium col-12-small">
                             <form>
                                 <div className="row gtr-uniform">
                                     <div className="col-12">
@@ -104,7 +106,7 @@ export default function PostEdit() {
                                         <Textarea onChange={handleForm} value={post.content} type="text" name="content" />
                                     </div>
                                     <div className="col-12">
-                                        <input type="file" id="F" ref={imageInput} onChange={handleImage} />
+                                        <Image handleImage={handleImage} imageInput={imageInput} imageName={imageName} image={post.photo} clearImage={clearImage} rem={rem} name="photo" />
                                     </div>
 
                                     <div className="col-12">
