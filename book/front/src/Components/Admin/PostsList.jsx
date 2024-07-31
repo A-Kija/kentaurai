@@ -1,8 +1,9 @@
-import { useEffect, useState, useContext, useCallback } from 'react';
+import { useEffect, useState, useContext, useCallback, useRef } from 'react';
 import useServerGet from '../../Hooks/useServerGet';
 import useServerDelete from '../../Hooks/useServerDelete';
 import useServerPut from '../../Hooks/useServerPut';
 import { ModalsContext } from '../../Contexts/Modals';
+import { LoaderContext } from '../../Contexts/Loader';
 import * as l from '../../Constants/urls';
 
 export default function PostsList() {
@@ -13,6 +14,9 @@ export default function PostsList() {
     
     const { setDeleteModal } = useContext(ModalsContext);
     const [posts, setPosts] = useState(null);
+    const { setShow } = useContext(LoaderContext);
+
+    const oldTopId = useRef(null);
 
     const hidePost = post => {
         setPosts(p => p.map(p => p.id === post.id ? { ...p, hidden: true } : p));
@@ -38,6 +42,7 @@ export default function PostsList() {
             return;
         }
         setPosts(serverGetResponse.serverData.posts ?? null);
+        oldTopId.current = serverGetResponse.serverData.posts.find(p => p.is_top === 1)?.id ?? null;
     }, [serverGetResponse]);
 
     useEffect(_ => {
@@ -55,8 +60,18 @@ export default function PostsList() {
         if (null === serverPutResponse) {
             return;
         }
+        if (serverPutResponse.type === 'error') {
+            setPosts(p => p.map(p => p.id === oldTopId.current ? { ...p, is_top: 1 } : { ...p, is_top: 0 }));
+        } else {
+            oldTopId.current = serverPutResponse.serverData.newId;
+        }
+    }, [serverPutResponse, oldTopId]);
 
-    }, [serverPutResponse]);
+    const makeTop = post => {
+        setPosts(p => p.map(p => p.id === post.id ? { ...p, is_top: 1 } : { ...p, is_top: 0 }));
+        setShow(true);
+        doPut({ id: post.id });
+    }
 
 
     return (
@@ -99,7 +114,15 @@ export default function PostsList() {
                                                             <img style={{height: '70px', width: 'auto'}} src={l.SERVER_IMAGES_URL + p.photo} alt={p.name} />
                                                     }
                                                 </td>
-                                                <td>{p.is_top ? 'Pagrindinis' : ''}</td>
+                                                <td>
+                                                    {
+                                                    p.is_top 
+                                                    ? 
+                                                    <b>Pagrindinis</b>
+                                                    :
+                                                    <input type="button" className="small" value="Padaryti pagrindiniu" onClick={_ => makeTop(p)} />
+                                                    }
+                                                </td>
                                                 <td className="two">
                                                     <ul className="actions special">
                                                         <li><a href={l.POST_EDIT + '/' + p.id} className="button small">redaguoti</a></li>

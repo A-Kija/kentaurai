@@ -28,10 +28,10 @@ export default function Post() {
             {
                 post === null ? <p>Palaukite kraunasi...</p> :
                     <>
-                        <header class="main">
+                        <header className="main">
                             <h1>{post.title}</h1>
                         </header>
-                        <span class="image main">
+                        <span className="image main">
                             {
                                 post.photo === null
                                     ?
@@ -41,7 +41,7 @@ export default function Post() {
                             }
                         </span>
                         <p>{post.preview}</p>
-                        <hr class="major" />
+                        <hr className="major" />
                         <div>
                             {post.content}
                         </div>

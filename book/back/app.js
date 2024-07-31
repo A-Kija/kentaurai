@@ -197,6 +197,44 @@ app.get('/web/content', (req, res) => {
     }, 1500);
 });
 
+app.put('/admin/change/post/top/:id', (req, res) => {
+
+    setTimeout(_ => {
+            
+            const { id } = req.params;
+    
+            const sql = `
+            UPDATE posts 
+            SET is_top = CASE WHEN id = ? THEN 1 ELSE 0 END
+            `;
+    
+            connection.query(sql, [id], (err, result) => {
+                if (err) throw err;
+                const updated = result.affectedRows;
+                if (!updated) {
+                    res.status(404).json({
+                        message: {
+                            type: 'info',
+                            title: 'Straipsniai',
+                            text: `Straipsnis nerastas`
+                        }
+                    }).end();
+                    return;
+                }
+                res.json({
+                    message: {
+                        type: 'success',
+                        title: 'Straipsniai',
+                        text: `Straipsnio viršūnė sėkmingai pakeista`
+                    },
+                    newId: id
+                }).end();
+            });
+    }, 1500);
+
+});
+
+
 
 app.get('/admin/posts', (req, res) => {
     setTimeout(_ => {
