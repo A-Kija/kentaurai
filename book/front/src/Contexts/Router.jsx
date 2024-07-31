@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 import Page404 from '../Components/Common/Page404';
 import Home from '../Components/Web/Home';
+import Post from '../Components/Web/Post';
 import Web from '../Components/Web/Parts/Layout';
 import Admin from '../Components/Admin/Parts/Layout';
 import Register from '../Components/Common/Register';
@@ -75,6 +76,7 @@ const Router = _ => {
     const routes = [
         { path: '', pc: 0, component: null },
         { path: l.SITE_HOME, pc: 0, component: <Web><Home /></Web> },
+        { path: l.SITE_POST, pc: 1, component: <Web><Post /></Web> },
         { path: '#bebras', pc: 0, component: <Web><Bebras /></Web> },
         { path: '#zebras', pc: 0, component: <Web><Zebras /></Web> },
 

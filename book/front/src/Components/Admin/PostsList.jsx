@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext, useCallback } from 'react';
 import useServerGet from '../../Hooks/useServerGet';
 import useServerDelete from '../../Hooks/useServerDelete';
+import useServerPut from '../../Hooks/useServerPut';
 import { ModalsContext } from '../../Contexts/Modals';
 import * as l from '../../Constants/urls';
 
@@ -8,6 +9,8 @@ export default function PostsList() {
 
     const { doAction: doGet, serverResponse: serverGetResponse } = useServerGet(l.SERVER_GET_POSTS);
     const { doAction: doDelete, serverResponse: serverDeleteResponse } = useServerDelete(l.SERVER_DELETE_POST);
+    const { doAction: doPut, serverResponse: serverPutResponse } = useServerPut(l.SERVER_CHANGE_POST_TOP);
+    
     const { setDeleteModal } = useContext(ModalsContext);
     const [posts, setPosts] = useState(null);
 
@@ -47,6 +50,13 @@ export default function PostsList() {
             removeHidden();
         }
     }, [serverDeleteResponse, showPost, removeHidden]);
+
+    useEffect(_ => {
+        if (null === serverPutResponse) {
+            return;
+        }
+
+    }, [serverPutResponse]);
 
 
     return (

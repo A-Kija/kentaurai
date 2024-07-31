@@ -66,26 +66,6 @@ const deleteImage = postId => {
     });
 };
 
-const preDeleteImage = postId => {
-    let sql = 'SELECT photo FROM posts WHERE id = ?';
-    connection.query(sql, [postId], (err, results) => {
-        if (err) {
-            return null;
-        } else {
-            if (results[0].photo) {
-                return results[0].photo;
-            }
-        }
-    });
-};
-
-const doDeleteImage = filename => {
-    fs.unlinkSync('public/img/' + filename);
-};
-
-
-
-
 const maintenance = (req, res, next) => {
     res.status(503).json({
         message: {
@@ -149,6 +129,31 @@ const checkUserIsAuthorized = (req, res, roles) => {
 
 app.use(checkSession);
 
+
+app.get('/web/post/:id', (req, res) => {
+    setTimeout(_ => {
+        const { id } = req.params;
+        const sql = `SELECT * FROM posts WHERE id = ?`;
+        connection.query(sql, [id], (err, rows) => {
+            if (err) throw err;
+            if (!rows.length) {
+                res.status(404).json({
+                    message: {
+                        type: 'info',
+                        title: 'Straipsniai',
+                        text: `Straipsnis nerastas`
+                    }
+                }).end();
+                return;
+            }
+            res.json({
+                post: rows[0]
+            }).end();
+        });
+    }, 1500);
+});
+
+
 app.get('/web/types', (req, res) => {
     setTimeout(_ => {
         const sql = `SELECT * FROM types`;
@@ -210,38 +215,45 @@ app.get('/admin/posts', (req, res) => {
     }, 1500);
 });
 
+
 app.delete('/admin/delete/post/:id', (req, res) => {
     setTimeout(_ => {
         const { id } = req.params;
-        const filename = preDeleteImage(id);
-        const sql = `
-        DELETE 
-        FROM posts 
-        WHERE id = ? AND is_top = 0
-        `;
-        connection.query(sql, [id], (err, result) => {
-            if (err) throw err;
-            const deleted = result.affectedRows;
-            if (!deleted) {
-                res.status(422).json({
-                    message: {
-                        type: 'info',
-                        title: 'Straipsniai',
-                        text: `Straipsnis yra priskirtas kaip viršutinis ir negali būti ištrintas arba straipsnis neegzistuoja`
+        let filename = null;
+        let sql = 'SELECT photo FROM posts WHERE id = ?';
+        connection.query(sql, [id], (err, results) => {
+            if (results[0].photo) {
+                filename = results[0].photo;
+                const sql = `
+                    DELETE 
+                    FROM posts 
+                    WHERE id = ? AND is_top = 0
+                    `;
+                connection.query(sql, [id], (err, result) => {
+                    if (err) throw err;
+                    const deleted = result.affectedRows;
+                    if (!deleted) {
+                        res.status(422).json({
+                            message: {
+                                type: 'info',
+                                title: 'Straipsniai',
+                                text: `Straipsnis yra priskirtas kaip viršutinis ir negali būti ištrintas arba straipsnis neegzistuoja`
+                            }
+                        }).end();
+                        return;
                     }
-                }).end();
-                return;
+                    if (filename) {
+                        fs.unlinkSync('public/img/' + filename);
+                    }
+                    res.json({
+                        message: {
+                            type: 'success',
+                            title: 'Straipsniai',
+                            text: `Straipsnis sėkmingai ištrintas`
+                        }
+                    }).end();
+                });
             }
-            if (filename) {
-                doDeleteImage(filename);
-            }
-            res.json({
-                message: {
-                    type: 'success',
-                    title: 'Straipsniai',
-                    text: `Straipsnis sėkmingai ištrintas`
-                }
-            }).end();
         });
     }, 1500);
 });

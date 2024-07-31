@@ -54,7 +54,7 @@ export default function Home() {
                                 </header>
                                 <p>{topPost.preview}</p>
                                 <ul className="actions">
-                                    <li><a href="#" className="button big">Skaityti daugiau</a></li>
+                                    <li><a href={l.SITE_POST + '/' + topPost.id} className="button big">Skaityti daugiau</a></li>
                                 </ul>
                             </div>
                             <span className="image object">
@@ -97,7 +97,7 @@ export default function Home() {
                     {
                         allPosts === null ? <p>Palaukite kraunasi...</p> : allPosts.map(p => (
                             <article key={p.id}>
-                                <a href="#" className="image">
+                                <a href={l.SITE_POST + '/' + p.id} className="image">
                                     {
                                         p.photo === null
                                             ?
@@ -109,7 +109,7 @@ export default function Home() {
                                 <h3>{p.title}</h3>
                                 <p>{p.preview}</p>
                                 <ul className="actions">
-                                    <li><a href="#" className="button">Daugiau</a></li>
+                                    <li><a href={l.SITE_POST + '/' + p.id} className="button">Daugiau</a></li>
                                 </ul>
                             </article>
                         ))
