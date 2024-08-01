@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('node:fs');
 const md5 = require('md5');
 const app = express();
-const port = 3001;
+const port = 80;
 
 const connection = mysql.createConnection({
     host: 'localhost',

@@ -1,7 +1,11 @@
 
-export const SERVER_URL = 'http://localhost:3001/';
-export const SITE_URL = 'http://localhost:3000/';
-export const SERVER_IMAGES_URL = 'http://localhost:3001/img/';
+// export const SERVER_URL = 'http://localhost:3001/';
+// export const SITE_URL = 'http://localhost:3000/';
+// export const SERVER_IMAGES_URL = 'http://localhost:3001/img/';
+
+export const SERVER_URL = 'http://africa.test/';
+export const SITE_URL = 'http://africa.test/';
+export const SERVER_IMAGES_URL = 'http://africa.test/img/';
 
 
 
